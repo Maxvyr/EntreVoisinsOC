@@ -29,7 +29,8 @@
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:srcCompat="@drawable/ic_star_white_24dp" />
+        app:srcCompat="@drawable/ic_star_white_24dp"
+        android:focusable="true" />
 
 <!--  Linear Layout - Information Neighbour  -->
     <LinearLayout
