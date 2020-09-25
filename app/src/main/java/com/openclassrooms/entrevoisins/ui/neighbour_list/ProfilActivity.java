@@ -23,8 +23,8 @@ public class ProfilActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case(R.id.home):
-            finish();
-            return true;
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
