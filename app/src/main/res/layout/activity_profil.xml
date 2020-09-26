@@ -32,13 +32,16 @@
         app:srcCompat="@drawable/ic_star_white_24dp"
         android:focusable="true" />
 
-<!--  Linear Layout - Information Neighbour  -->
-    <LinearLayout
-        android:id="@+id/linearLayout"
+
+    <!--  Card View - About Neighbour Top-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:orientation="vertical"
+        android:layout_height="180dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
 
@@ -46,39 +49,49 @@
             android:id="@+id/namenNeighbour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/localisationNeighbour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/phoneNeighbour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/siteNeighbour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
 
-<!--  Linear Layout - About Neighbour  -->
-    <LinearLayout
+    </android.support.v7.widget.CardView>
+
+    <!--  Card View - About Neighbour Bottom-->
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:orientation="vertical"
+        android:layout_height="180dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.578">
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-      <TextView
-          android:id="@+id/aboutNeighbour"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textStyle="bold"
-          android:textSize="25sp"
-          android:text="@string/aboutMe" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/aboutNeighbour"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content"
+        android:text="@string/aboutMe"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    </android.support.v7.widget.CardView>
+
 
 
 </android.support.constraint.ConstraintLayout>
