@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.events.SelectedNeighbourEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -31,15 +33,23 @@ public class ProfilActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // For listening thz Event Bus to receive Data (register)
     @Override
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
     }
 
+    // For listening thz Event Bus to receive Data (unregister)
     @Override
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    //listen event
+    @Subscribe
+    public void onEvent(SelectedNeighbourEvent event){
+        event.getNeighbour();
     }
 }
