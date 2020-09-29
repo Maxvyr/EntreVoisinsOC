@@ -9,15 +9,20 @@ import android.view.MenuItem;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.openProfilActivityEvent;
+import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class ProfilActivity extends AppCompatActivity {
 
+    Neighbour neighbour;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().post(new openProfilActivityEvent());
         setContentView(R.layout.activity_profil);
         // activate the button return on the appBar to return to previous page
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -33,7 +38,7 @@ public class ProfilActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // For listening thz Event Bus to receive Data (register)
+    // For listening the Event Bus to receive Data (register)
     @Override
     protected void onStart() {
         super.onStart();
@@ -48,8 +53,8 @@ public class ProfilActivity extends AppCompatActivity {
     }
 
     //listen event
-    @Subscribe
+    @Subscribe(sticky = true)
     public void onEvent(SelectedNeighbourEvent event){
-        event.getNeighbour();
+       neighbour = event.getNeighbour();
     }
 }

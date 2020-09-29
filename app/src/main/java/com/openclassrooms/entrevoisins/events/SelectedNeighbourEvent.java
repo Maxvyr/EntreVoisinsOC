@@ -9,8 +9,8 @@ public class SelectedNeighbourEvent {
 
     //Constructor
     // for recup the neighbour when the user click
-    public SelectedNeighbourEvent(Neighbour neigbour){
-        this.neighbour = neigbour;
+    public SelectedNeighbourEvent(Neighbour neighbour){
+        this.neighbour = neighbour;
     };
 
     //Methods

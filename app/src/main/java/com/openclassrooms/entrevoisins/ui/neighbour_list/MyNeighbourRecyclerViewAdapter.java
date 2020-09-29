@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,10 +27,14 @@ import butterknife.ButterKnife;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
+    private static final String TAG = "MyNeighbourRecyclerView";
     private final List<Neighbour> mNeighbours;
+    Context mContext;
 
+    //Constructor
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         mNeighbours = items;
+//        mContext = context;
     }
 
     @Override
@@ -63,8 +68,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.mGeneralButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("genButtonClick","Click Button");
-                EventBus.getDefault().post(new SelectedNeighbourEvent(neighbour));
+                Log.d(TAG,"Click Button show Profil");
+//                Intent intent = new Intent(mContext, ProfilActivity.class);
+//                mContext.startActivity(intent);
+                EventBus.getDefault().postSticky(new SelectedNeighbourEvent(neighbour));
             }
         });
     }

@@ -9,6 +9,9 @@ import android.widget.Button;
 
 import com.openclassrooms.entrevoisins.R;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
