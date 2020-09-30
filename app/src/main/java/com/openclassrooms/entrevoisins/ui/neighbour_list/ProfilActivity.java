@@ -1,7 +1,10 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -9,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
@@ -77,7 +81,7 @@ public class ProfilActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
-    
+
     //listen event
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(SelectedNeighbourEvent event){
