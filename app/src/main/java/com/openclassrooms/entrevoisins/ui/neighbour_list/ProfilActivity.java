@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
@@ -15,8 +18,29 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.BindView;
+
 public class ProfilActivity extends AppCompatActivity {
 
+    //UI components
+    @BindView(R.id.floatingActionButtonProfil)
+    FloatingActionButton floatingActionButtonProfil;
+    @BindView(R.id.imageViewProfil)
+    ImageView imageViewProfil;
+    @BindView(R.id.namenNeighbour)
+    TextView nameNeighbour;
+    @BindView(R.id.localisationNeighbour)
+    TextView localisationNeighbour;
+    @BindView(R.id.phoneNeighbour)
+    TextView phoneNeighbour;
+    @BindView(R.id.siteNeighbour)
+    TextView siteNeighbour;
+    @BindView(R.id.aboutNeighbour)
+    TextView aboutNeighbour;
+    @BindView(R.id.descriptionNeighbour)
+    TextView descriptionNeighbour;
+
+    //Over variables
     Neighbour neighbour;
 
     @Override
