@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -41,6 +43,7 @@ public class ProfilActivity extends AppCompatActivity {
     TextView descriptionNeighbour;
 
     //Over variables
+    private static final String TAG = "ProfilActivity";
     Neighbour neighbour;
 
     @Override
@@ -74,7 +77,7 @@ public class ProfilActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
-
+    
     //listen event
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(SelectedNeighbourEvent event){
