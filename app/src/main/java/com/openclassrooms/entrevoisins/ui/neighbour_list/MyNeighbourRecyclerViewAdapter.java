@@ -33,9 +33,9 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     Context mContext;
 
     //Constructor
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, Context context) {
         mNeighbours = items;
-//        mContext = context;
+        mContext = context;
     }
 
     @Override
@@ -70,9 +70,9 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View view) {
                 Log.d(TAG,"Click Button show Profil");
-//                Intent intent = new Intent(mContext, ProfilActivity.class);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, ProfilActivity.class);
                 EventBus.getDefault().postSticky(new SelectedNeighbourEvent(neighbour));
+                mContext.startActivity(intent);
             }
         });
     }

@@ -13,6 +13,7 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -46,12 +47,12 @@ public class ProfilActivity extends AppCompatActivity {
     // For listening thz Event Bus to receive Data (unregister)
     @Override
     protected void onStop() {
-        super.onStop();
         EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     //listen event
-    @Subscribe(sticky = true)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(SelectedNeighbourEvent event){
        neighbour = event.getNeighbour();
     }
