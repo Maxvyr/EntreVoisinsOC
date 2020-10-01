@@ -83,8 +83,9 @@ public class ProfilActivity extends AppCompatActivity {
     }
 
     //listen event
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SelectedNeighbourEvent event){
-       neighbour = event.getNeighbour();
+        Log.d(TAG, "onEvent: receive" + event);
+        neighbour = event.getNeighbour();
     }
 }

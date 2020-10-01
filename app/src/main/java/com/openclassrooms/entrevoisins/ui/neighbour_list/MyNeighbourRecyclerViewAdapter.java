@@ -71,7 +71,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             public void onClick(View view) {
                 Log.d(TAG,"Click Button show Profil");
                 Intent intent = new Intent(mContext, ProfilActivity.class);
-                EventBus.getDefault().postSticky(new SelectedNeighbourEvent(neighbour));
+                EventBus.getDefault().post(new SelectedNeighbourEvent(neighbour));
                 mContext.startActivity(intent);
             }
         });
