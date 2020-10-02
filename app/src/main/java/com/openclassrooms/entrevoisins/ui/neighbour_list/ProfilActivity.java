@@ -68,22 +68,8 @@ public class ProfilActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // For listening the Event Bus to receive Data (register)
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    // For listening thz Event Bus to receive Data (unregister)
-    @Override
-    protected void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
     //listen event
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(SelectedNeighbourEvent event){
         Log.d(TAG, "onEvent: receive" + event);
         neighbour = event.getNeighbour();

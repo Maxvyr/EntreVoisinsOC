@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
     <ImageView
         android:id="@+id/item_list_avatar"
         android:layout_width="50dp"
@@ -27,16 +26,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/item_list_avatar"
         app:layout_constraintStart_toEndOf="@+id/item_list_avatar"
         app:layout_constraintTop_toTopOf="@+id/item_list_avatar" />
-
-    <ImageButton
-        android:id="@+id/item_list_general_button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/item_list_delete_button"

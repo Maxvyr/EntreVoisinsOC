@@ -60,7 +60,9 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
+        //recup list
         mNeighbours = mApiService.getNeighbours();
+        //plug la list a l'adapter du recycler view
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, getActivity()));
     }
 

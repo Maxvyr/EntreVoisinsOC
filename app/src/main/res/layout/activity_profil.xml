@@ -8,19 +8,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.neighbour_list.ProfilActivity">
 
-
     <!--  FloatinAction Button > FAV   -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonProfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_marginEnd="@dimen/dp32"
         app:layout_anchor="@id/cardView"
         app:layout_anchorGravity="end"
         android:src="@drawable/ic_star_white_24dp"/>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -30,7 +26,7 @@
     <ImageView
         android:id="@+id/imageViewProfil"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="@dimen/dp300"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,9 +37,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
+        android:layout_height="@dimen/dp180"
+        app:cardCornerRadius="@dimen/dp10"
+        app:cardElevation="@dimen/dp10"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,37 +50,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/name"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="15dp"
-            android:textSize="25sp"
-            android:textStyle="bold"
-
-            />
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginStart="@dimen/dp15"
+            android:textSize="@dimen/sp25"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/localisationNeighbour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/adresse"
-            android:layout_marginTop="55dp"
-            android:layout_marginStart="15dp"
-            />
+            android:layout_marginTop="@dimen/dp55"
+            android:layout_marginStart="@dimen/dp15"/>
 
         <TextView
             android:id="@+id/phoneNeighbour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/phone"
-            android:layout_marginTop="80dp"
-            android:layout_marginStart="15dp"/>
+            android:layout_marginTop="@dimen/dp80"
+            android:layout_marginStart="@dimen/dp15"/>
 
         <TextView
             android:id="@+id/siteNeighbour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/site"
-            android:layout_marginTop="110dp"
-            android:layout_marginStart="15dp" />
+            android:layout_marginTop="@dimen/dp110"
+            android:layout_marginStart="@dimen/dp15" />
 
     </androidx.cardview.widget.CardView>
 
@@ -92,9 +85,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
+        android:layout_height="@dimen/dp180"
+        app:cardCornerRadius="@dimen/dp10"
+        app:cardElevation="@dimen/dp10"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,8 +99,8 @@
             android:id="@+id/aboutNeighbour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginStart="@dimen/dp10"
             android:text="@string/aboutMe"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -116,8 +109,8 @@
             android:id="@+id/descriptionNeighbour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/dp40"
+            android:layout_marginStart="@dimen/dp10"
             android:text="TEXT DE REMPLISSAGE" />
 
     </androidx.cardview.widget.CardView>

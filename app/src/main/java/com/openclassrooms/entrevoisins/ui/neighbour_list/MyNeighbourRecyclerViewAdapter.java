@@ -62,11 +62,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         });
 
         /*
-        * Click on the user with image button on top up the fragment neightbour
-        * Send data with Event Bus on the next activity
-        * Profil Activity
-        */
-        holder.mGeneralButton.setOnClickListener(new View.OnClickListener() {
+         * permet de rendre la ligne clickable (le view holder)
+         * Send data with Event Bus on the NeighbourFragment
+         */
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG,"Click Button show Profil");
@@ -89,8 +88,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
-        @BindView(R.id.item_list_general_button)
-        public ImageButton mGeneralButton;
 
         public ViewHolder(View view) {
             super(view);
