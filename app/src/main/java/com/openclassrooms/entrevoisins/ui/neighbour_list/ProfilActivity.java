@@ -33,8 +33,10 @@ public class ProfilActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButtonProfil;
     @BindView(R.id.imageViewProfil)
     ImageView imageViewProfil;
-    @BindView(R.id.namenNeighbour)
-    TextView nameNeighbour;
+    @BindView(R.id.namenNeighbourBlack)
+    TextView nameNeighbourBlack;
+    @BindView(R.id.namenNeighbourWhite)
+    TextView nameNeighbourWhite;
     @BindView(R.id.localisationNeighbour)
     TextView localisationNeighbour;
     @BindView(R.id.phoneNeighbour)

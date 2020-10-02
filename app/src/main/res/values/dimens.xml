@@ -7,15 +7,18 @@
     <dimen name="text_margin">16dp</dimen>
 <!--    dp value add -->
     <dimen name="dp300">300dp</dimen>
+    <dimen name="dp250">250dp</dimen>
     <dimen name="dp180">180dp</dimen>
     <dimen name="dp110">110dp</dimen>
     <dimen name="dp80">80dp</dimen>
     <dimen name="dp55">55dp</dimen>
+    <dimen name="dp45">45dp</dimen>
     <dimen name="dp40">40dp</dimen>
     <dimen name="dp32">32dp</dimen>
     <dimen name="dp10">10dp</dimen>
     <dimen name="dp15">15dp</dimen>
     <dimen name="dp5">5dp</dimen>
+    <dimen name="dp0.5">0.5dp</dimen>
 <!--    sp value add-->
     <dimen name="sp25">25sp</dimen>
 </resources>

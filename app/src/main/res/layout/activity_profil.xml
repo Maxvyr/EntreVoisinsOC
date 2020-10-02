@@ -30,11 +30,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
+        tools:srcCompat="@tools:sample/backgrounds/scenic"
         android:contentDescription="@string/imageUser" />
 
-    <!--  Card View - About Neighbour Top-->
-    <androidx.cardview.widget.CardView
+    <!--TextView White-->
+        <TextView
+            android:id="@+id/namenNeighbourWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp180"
+            android:layout_marginStart="@dimen/dp10"
+            android:text="@string/name"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp25"
+            android:textStyle="bold"
+            app:layout_anchor="@id/imageViewProfil"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewProfil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.675" />
+
+        <!--  Card View - About Neighbour Top-->
+        <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp180"
@@ -46,22 +65,31 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewProfil">
 
         <TextView
-            android:id="@+id/namenNeighbour"
+            android:id="@+id/namenNeighbourBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/name"
             android:layout_marginTop="@dimen/dp10"
             android:layout_marginStart="@dimen/dp15"
             android:textSize="@dimen/sp25"
-            android:textStyle="bold" />
+            android:textColor="@android:color/black"
+            android:textStyle="bold"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp0.5"
+                android:layout_marginTop="@dimen/dp45"
+                android:background="@android:color/darker_gray"/>
 
         <TextView
             android:id="@+id/localisationNeighbour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/adresse"
+            android:text="@string/address"
             android:layout_marginTop="@dimen/dp55"
-            android:layout_marginStart="@dimen/dp15"/>
+            android:layout_marginStart="@dimen/dp10"
+            android:drawableStart="@drawable/ic_position_pink_24dp"
+            android:drawablePadding="@dimen/dp5"/>
 
         <TextView
             android:id="@+id/phoneNeighbour"
@@ -69,15 +97,19 @@
             android:layout_height="wrap_content"
             android:text="@string/phone"
             android:layout_marginTop="@dimen/dp80"
-            android:layout_marginStart="@dimen/dp15"/>
+            android:layout_marginStart="@dimen/dp10"
+            android:drawableStart="@drawable/ic_call_pink_24dp"
+            android:drawablePadding="@dimen/dp5"/>
 
-        <TextView
+            <TextView
             android:id="@+id/siteNeighbour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/site"
             android:layout_marginTop="@dimen/dp110"
-            android:layout_marginStart="@dimen/dp15" />
+            android:layout_marginStart="@dimen/dp10"
+            android:drawableStart="@drawable/ic_link_pink_24dp"
+            android:drawablePadding="@dimen/dp5"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -95,6 +127,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp0.5"
+            android:layout_marginTop="@dimen/dp45"
+            android:background="@android:color/darker_gray"/>
+
         <TextView
             android:id="@+id/aboutNeighbour"
             android:layout_width="wrap_content"
@@ -103,15 +141,16 @@
             android:layout_marginStart="@dimen/dp10"
             android:text="@string/aboutMe"
             android:textSize="25sp"
+            android:textColor="@android:color/black"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/descriptionNeighbour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp40"
+            android:layout_marginTop="@dimen/dp55"
             android:layout_marginStart="@dimen/dp10"
-            android:text="TEXT DE REMPLISSAGE" />
+            android:text="@string/description" />
 
     </androidx.cardview.widget.CardView>
 
