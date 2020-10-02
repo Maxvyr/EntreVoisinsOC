@@ -9,6 +9,6 @@
     <string name="name">name</string>
     <string name="address">address</string>
     <string name="phone">phone</string>
-    <string name="site">site</string>
+    <string name="site">www.facebook.fr/%1$s</string>
     <string name="description">description</string>
 </resources>

@@ -1,10 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -12,19 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.core.app.ActivityCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.events.SelectedNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import butterknife.BindView;
-import butterknife.OnClick;
+import butterknife.ButterKnife;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -41,12 +35,10 @@ public class ProfilActivity extends AppCompatActivity {
     TextView localisationNeighbour;
     @BindView(R.id.phoneNeighbour)
     TextView phoneNeighbour;
-    @BindView(R.id.siteNeighbour)
-    TextView siteNeighbour;
-    @BindView(R.id.aboutNeighbour)
-    TextView aboutNeighbour;
     @BindView(R.id.descriptionNeighbour)
     TextView descriptionNeighbour;
+    @BindView(R.id.siteNeighbour)
+    TextView siteNeighbour;
 
     //Over variables
     private static final String TAG = "ProfilActivity";
@@ -56,6 +48,15 @@ public class ProfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
+        ButterKnife.bind(this);
+
+        //retrieve Neighbour
+        retrieveNeighbourFromIntent();
+
+        //update UI
+        updateUI();
+
+        // Update Layout
         // activate the button return on the appBar to return to previous page
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -63,17 +64,48 @@ public class ProfilActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case(R.id.home):
+            case android.R.id.home : {
                 finish();
                 return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //listen event
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onEvent(SelectedNeighbourEvent event){
-        Log.d(TAG, "onEvent: receive" + event);
-        neighbour = event.getNeighbour();
+    /*
+     * Methode for call this activity from the over
+     * and passe value of the neighbour
+     */
+    public static void navigateTo(Activity activity, Neighbour neighbour) {
+        Intent intent = new Intent(activity, ProfilActivity.class);
+        intent.putExtra("neighbour", neighbour);
+        ActivityCompat.startActivity(activity, intent,null);
+    }
+
+    //Methode to receive value from previous fragment
+    private void retrieveNeighbourFromIntent() {
+        // récuperer intent créer pour recup les valeurs
+        // du voisin que l'utilisateur a cliqué
+        Intent intent = getIntent();
+        neighbour = intent.getParcelableExtra("neighbour");
+        Log.d(TAG, "value receive " + neighbour);
+    }
+
+    //Methode for updating the UI
+    private void updateUI() {
+        // Update Layout
+        // Text
+        nameNeighbourWhite.setText(neighbour.getName());
+        nameNeighbourBlack.setText(neighbour.getName());
+        localisationNeighbour.setText(neighbour.getAddress());
+        phoneNeighbour.setText(neighbour.getPhoneNumber());
+        descriptionNeighbour.setText(neighbour.getAboutMe());
+        String name = getString(R.string.site, neighbour.getName().toLowerCase());
+        siteNeighbour.setText(name);
+        // Image
+        Glide.with(this)
+                .load(neighbour.getAvatarUrl())
+                .apply(RequestOptions.noTransformation())
+                .into(this.imageViewProfil);
     }
 }

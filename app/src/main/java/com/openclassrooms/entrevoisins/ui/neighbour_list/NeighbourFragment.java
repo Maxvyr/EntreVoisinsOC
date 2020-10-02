@@ -1,11 +1,14 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.SelectedNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -28,6 +33,7 @@ public class NeighbourFragment extends Fragment {
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
+    private static final String TAG = "NeighbourFragment";
 
 
     /**
@@ -63,7 +69,7 @@ public class NeighbourFragment extends Fragment {
         //recup list
         mNeighbours = mApiService.getNeighbours();
         //plug la list a l'adapter du recycler view
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, getActivity()));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
     }
 
     @Override
@@ -92,5 +98,17 @@ public class NeighbourFragment extends Fragment {
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
+    }
+
+    /*
+     * Listen Event to receive the click on the item list
+     * and after transfer it on the ProfilActivity
+     * with the method navigateTo
+     */
+    @Subscribe
+    public void onEvent(SelectedNeighbourEvent event){
+        Log.d(TAG, "onEvent: " + event);
+        Neighbour neighbourSelected = event.getNeighbour();
+        ProfilActivity.navigateTo(getActivity(),neighbourSelected);
     }
 }

@@ -33,9 +33,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     Context mContext;
 
     //Constructor
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, Context context) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         mNeighbours = items;
-        mContext = context;
     }
 
     @Override
@@ -62,16 +61,14 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         });
 
         /*
-         * permet de rendre la ligne clickable (le view holder)
+         * permet de rendre le view holder clickable
          * Send data with Event Bus on the NeighbourFragment
          */
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG,"Click Button show Profil");
-                Intent intent = new Intent(mContext, ProfilActivity.class);
                 EventBus.getDefault().post(new SelectedNeighbourEvent(neighbour));
-                mContext.startActivity(intent);
             }
         });
     }
