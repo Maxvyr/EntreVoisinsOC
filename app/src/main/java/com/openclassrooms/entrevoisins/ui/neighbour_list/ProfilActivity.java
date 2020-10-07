@@ -61,17 +61,6 @@ public class ProfilActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home : {
-                finish();
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     /*
      * Methode for call this activity from the over
      * and passe value of the neighbour
