@@ -6,9 +6,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -29,6 +29,8 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     @BindView(R.id.avatar)
     ImageView avatar;
+    @BindView(R.id.toolbarAdd)
+    Toolbar toolbarAdd;
     @BindView(R.id.nameLyt)
     TextInputLayout nameInput;
     @BindView(R.id.phoneNumberLyt)
@@ -39,8 +41,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
     TextInputLayout aboutMeInput;
     @BindView(R.id.create)
     MaterialButton addButton;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     private NeighbourApiService mApiService;
     private String mNeighbourImage;
@@ -50,7 +50,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_neighbour);
         ButterKnife.bind(this);
-        setActionBar(toolbar);
+        setSupportActionBar(toolbarAdd);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mApiService = DI.getNeighbourApiService();
         init();

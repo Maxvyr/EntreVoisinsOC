@@ -23,8 +23,8 @@ import butterknife.ButterKnife;
 public class ProfilActivity extends AppCompatActivity {
 
     //UI components
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.toolbarProfil)
+    Toolbar toolbarProfil;
     @BindView(R.id.floatingActionButtonProfil)
     FloatingActionButton floatingActionButtonProfil;
     @BindView(R.id.imageViewProfil)
@@ -61,7 +61,7 @@ public class ProfilActivity extends AppCompatActivity {
         // Update Layout
         // set toolbar selected
         // activate the button return on the appBar to return to previous page
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbarProfil);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
