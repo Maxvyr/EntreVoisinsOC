@@ -28,7 +28,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 
-public class NeighbourFragment extends Fragment {
+public class NeighbourFragment extends Fragment implements FragmentCallback {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
@@ -68,8 +68,8 @@ public class NeighbourFragment extends Fragment {
     private void initList() {
         //recup list
         mNeighbours = mApiService.getNeighbours();
-        //plug la list a l'adapter du recycler view
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        //plug la list et l'interface(pour le callback) a l'adapter du recycler view
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
     }
 
     @Override
@@ -99,16 +99,16 @@ public class NeighbourFragment extends Fragment {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
-
     /*
-     * Listen Event to receive the click on the item list
+     * Interface Callback to receive the click on the item list
      * and after transfer it on the ProfilActivity
      * with the method navigateTo
      */
-    @Subscribe
-    public void onEvent(SelectedNeighbourEvent event){
+    @Override
+    public void itemSelectedCallBack(SelectedNeighbourEvent event) {
         Log.d(TAG, "onEvent: " + event);
         Neighbour neighbourSelected = event.getNeighbour();
         ProfilActivity.navigateTo(getActivity(),neighbourSelected);
     }
+
 }

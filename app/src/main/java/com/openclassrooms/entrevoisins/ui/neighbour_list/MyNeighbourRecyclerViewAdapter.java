@@ -30,11 +30,12 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private static final String TAG = "MyNeighbourRecyclerView";
     private final List<Neighbour> mNeighbours;
-    Context mContext;
+    private FragmentCallback fragmentCallback;
 
     //Constructor
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, FragmentCallback fragmentCallback) {
         mNeighbours = items;
+        this.fragmentCallback = fragmentCallback;
     }
 
     @Override
@@ -68,7 +69,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View view) {
                 Log.d(TAG,"Click Button show Profil");
-                EventBus.getDefault().post(new SelectedNeighbourEvent(neighbour));
+                //Passe le voisin sélection dans l'interface du callback
+                fragmentCallback.itemSelectedCallBack(new SelectedNeighbourEvent(neighbour));
             }
         });
     }
