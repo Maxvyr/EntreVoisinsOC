@@ -1,14 +1,14 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui.neigbour_profil;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +23,8 @@ import butterknife.ButterKnife;
 public class ProfilActivity extends AppCompatActivity {
 
     //UI components
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.floatingActionButtonProfil)
     FloatingActionButton floatingActionButtonProfil;
     @BindView(R.id.imageViewProfil)
@@ -57,7 +59,9 @@ public class ProfilActivity extends AppCompatActivity {
         updateUI();
 
         // Update Layout
+        // set toolbar selected
         // activate the button return on the appBar to return to previous page
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
