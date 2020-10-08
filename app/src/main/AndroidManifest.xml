@@ -20,7 +20,7 @@
                 android:value=".ui.neighbour_list.ListNeighbourActivity"/>
         </activity>
         <activity
-            android:name=".ui.neighbour_list.AddNeighbourActivity"
+            android:name=".ui.neighbour_add.AddNeighbourActivity"
             android:label="@string/activity_new_neighbour" />
         <activity
             android:name=".ui.neighbour_list.ListNeighbourActivity"

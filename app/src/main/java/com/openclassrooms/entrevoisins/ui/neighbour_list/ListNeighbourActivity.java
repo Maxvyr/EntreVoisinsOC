@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.ui.neighbour_add.AddNeighbourActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.ui.neighbour_list;
+package com.openclassrooms.entrevoisins.ui.neighbour_add;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -38,6 +39,8 @@ public class AddNeighbourActivity extends AppCompatActivity {
     TextInputLayout aboutMeInput;
     @BindView(R.id.create)
     MaterialButton addButton;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private NeighbourApiService mApiService;
     private String mNeighbourImage;
@@ -47,6 +50,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_neighbour);
         ButterKnife.bind(this);
+        setActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mApiService = DI.getNeighbourApiService();
         init();
