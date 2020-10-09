@@ -84,7 +84,7 @@ public class ProfilActivity extends AppCompatActivity {
                 neighbour.setFavorite(!neighbour.getFavorite());
                 // en fonction du click changer l'affichage
                 showStartColor();
-                Log.d(TAG, "onClick: isFAV " + neighbour.getFavorite());
+                Log.d(TAG, "onClick: isFAV : " + neighbour.getFavorite());
                 //on la new val stock dans un shared preferences
                 sharedPreferences.edit().putBoolean(KEY_ISFAV, neighbour.getFavorite()).apply();
             }
