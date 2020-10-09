@@ -7,6 +7,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColorProfil"
     tools:context=".ui.neigbour_profil.ProfilActivity">
 
     <!--  FloatinAction Button > FAV   -->
@@ -17,7 +18,9 @@
         android:layout_marginEnd="@dimen/dp32"
         app:layout_anchor="@id/cardView"
         app:layout_anchorGravity="end"
-        android:src="@drawable/ic_star_white_24dp"/>
+        app:borderWidth="@dimen/dp0"
+        android:backgroundTint="@color/greyFAB"
+        android:src="@drawable/ic_star_border_white_24dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -51,7 +54,7 @@
             android:id="@+id/namenNeighbourWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp180"
+            android:layout_marginTop="@dimen/dp230"
             android:layout_marginStart="@dimen/dp10"
             android:text="@string/name"
             android:textColor="@android:color/white"
@@ -99,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/address"
-            android:layout_marginTop="@dimen/dp55"
+            android:layout_marginTop="@dimen/dp60"
             android:layout_marginStart="@dimen/dp10"
             android:drawableStart="@drawable/ic_position_pink_24dp"
             android:drawablePadding="@dimen/dp5"/>
@@ -109,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/phone"
-            android:layout_marginTop="@dimen/dp80"
+            android:layout_marginTop="@dimen/dp105"
             android:layout_marginStart="@dimen/dp10"
             android:drawableStart="@drawable/ic_call_pink_24dp"
             android:drawablePadding="@dimen/dp5"/>
@@ -119,8 +122,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/site"
-            android:layout_marginTop="@dimen/dp110"
+            android:layout_marginTop="@dimen/dp150"
             android:layout_marginStart="@dimen/dp10"
+                android:layout_marginBottom="@dimen/dp5"
             android:drawableStart="@drawable/ic_link_pink_24dp"
             android:drawablePadding="@dimen/dp5"/>
 
@@ -161,7 +165,7 @@
             android:id="@+id/descriptionNeighbour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp55"
+            android:layout_marginTop="@dimen/dp60"
             android:layout_marginStart="@dimen/dp10"
             android:text="@string/description" />
 

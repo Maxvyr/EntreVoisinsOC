@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,6 +65,20 @@ public class ProfilActivity extends AppCompatActivity {
         // activate the button return on the appBar to return to previous page
         setSupportActionBar(toolbarProfil);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // for change value of isFavorite and value of the drawable
+        // click on FAB
+        floatingActionButtonProfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                neighbour.setFavorite(!neighbour.getFavorite());
+                if (neighbour.getFavorite()) {
+                    floatingActionButtonProfil.setImageResource(R.drawable.ic_star_yellow_24dp);
+                } else {
+                    floatingActionButtonProfil.setImageResource(R.drawable.ic_star_border_white_24dp);
+                }
+            }
+        });
     }
 
     /*
