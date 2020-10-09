@@ -28,6 +28,9 @@ public class Neighbour implements Parcelable {
     /** About me */
     private String aboutMe;
 
+    /** isFavorite */
+    private Boolean isFavorite = false;
+
     /**
      * Constructor
      * @param id
@@ -92,6 +95,14 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
+    public Boolean getFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.isFavorite = favorite;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,30 +116,6 @@ public class Neighbour implements Parcelable {
         return Objects.hash(id);
     }
 
-    //Override due to implement Parcel
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /*
-    * to convert my object Neighbour in a Parcel
-    * for sending them with putExtra
-    */
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(id);
-        parcel.writeString(name);
-        parcel.writeString(avatarUrl);
-        parcel.writeString(address);
-        parcel.writeString(phoneNumber);
-        parcel.writeString(aboutMe);
-    }
-
-
-    /*
-     * Parcelable implementation of Neighbour
-     */
     protected Neighbour(Parcel in) {
         id = in.readLong();
         name = in.readString();
@@ -136,6 +123,24 @@ public class Neighbour implements Parcelable {
         address = in.readString();
         phoneNumber = in.readString();
         aboutMe = in.readString();
+        byte tmpIsFavorite = in.readByte();
+        isFavorite = tmpIsFavorite == 0 ? null : tmpIsFavorite == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(avatarUrl);
+        dest.writeString(address);
+        dest.writeString(phoneNumber);
+        dest.writeString(aboutMe);
+        dest.writeByte((byte) (isFavorite == null ? 0 : isFavorite ? 1 : 2));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {

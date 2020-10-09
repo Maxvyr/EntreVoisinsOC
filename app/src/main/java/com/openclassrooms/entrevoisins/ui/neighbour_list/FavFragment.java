@@ -25,8 +25,7 @@ public class FavFragment extends Fragment {
      * @return A new instance of fragment FavFragment.
      */
     public static FavFragment newInstance() {
-        FavFragment fragment = new FavFragment();
-        return fragment;
+        return new FavFragment();
     }
 
     @Override

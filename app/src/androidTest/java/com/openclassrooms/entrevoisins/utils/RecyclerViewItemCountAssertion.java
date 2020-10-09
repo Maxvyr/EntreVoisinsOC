@@ -1,9 +1,10 @@
 package com.openclassrooms.entrevoisins.utils;
 
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.ViewAssertion;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewAssertion;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
@@ -24,14 +25,16 @@ public class RecyclerViewItemCountAssertion implements ViewAssertion {
             this.matcher = matcher;
         }
 
-        @Override
-        public void check(View view, NoMatchingViewException noViewFoundException) {
-            if (noViewFoundException != null) {
-                throw noViewFoundException;
-            }
+    @Override
+    public void check(View view, NoMatchingViewException noViewFoundException) {
 
-            RecyclerView recyclerView = (RecyclerView) view;
-            RecyclerView.Adapter adapter = recyclerView.getAdapter();
-            Assert.assertThat(adapter.getItemCount(), matcher);
+        if (noViewFoundException != null) {
+            throw noViewFoundException;
         }
+
+        RecyclerView recyclerView = (RecyclerView) view;
+        RecyclerView.Adapter adapter = recyclerView.getAdapter();
+        Assert.assertThat(adapter.getItemCount(), matcher);
+
     }
+}
