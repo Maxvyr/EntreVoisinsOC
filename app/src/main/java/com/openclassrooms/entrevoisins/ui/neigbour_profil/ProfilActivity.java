@@ -45,6 +45,7 @@ public class ProfilActivity extends AppCompatActivity {
     //Over variables
     private static final String TAG = "ProfilActivity";
     Neighbour neighbour;
+    private static final String KEY_EXTRA_NEIGHBOUR = "neighbour";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class ProfilActivity extends AppCompatActivity {
      */
     public static void navigateTo(Activity activity, Neighbour neighbour) {
         Intent intent = new Intent(activity, ProfilActivity.class);
-        intent.putExtra("neighbour", neighbour);
+        intent.putExtra(KEY_EXTRA_NEIGHBOUR, neighbour);
         ActivityCompat.startActivity(activity, intent,null);
     }
 
@@ -80,7 +81,7 @@ public class ProfilActivity extends AppCompatActivity {
         // récuperer intent créer pour recup les valeurs
         // du voisin que l'utilisateur a cliqué
         Intent intent = getIntent();
-        neighbour = intent.getParcelableExtra("neighbour");
+        neighbour = intent.getParcelableExtra(KEY_EXTRA_NEIGHBOUR);
         Log.d(TAG, "value receive " + neighbour);
     }
 
