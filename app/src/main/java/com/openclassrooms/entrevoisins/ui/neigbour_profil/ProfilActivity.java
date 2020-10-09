@@ -1,8 +1,11 @@
 package com.openclassrooms.entrevoisins.ui.neigbour_profil;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,14 +48,20 @@ public class ProfilActivity extends AppCompatActivity {
 
     //Over variables
     private static final String TAG = "ProfilActivity";
-    Neighbour neighbour;
     private static final String KEY_EXTRA_NEIGHBOUR = "neighbour";
+    private static final String KEY_ISFAV = "isFavorite";
+
+    Neighbour neighbour;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
         ButterKnife.bind(this);
+
+        //init Shared Pref
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         //retrieve Neighbour
         retrieveNeighbourFromIntent();
@@ -71,12 +80,13 @@ public class ProfilActivity extends AppCompatActivity {
         floatingActionButtonProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //inverser la valeur lors du click
                 neighbour.setFavorite(!neighbour.getFavorite());
-                if (neighbour.getFavorite()) {
-                    floatingActionButtonProfil.setImageResource(R.drawable.ic_star_yellow_24dp);
-                } else {
-                    floatingActionButtonProfil.setImageResource(R.drawable.ic_star_border_white_24dp);
-                }
+                // en fonction du click changer l'affichage
+                showStartColor();
+                Log.d(TAG, "onClick: isFAV " + neighbour.getFavorite());
+                //on la new val stock dans un shared preferences
+                sharedPreferences.edit().putBoolean(KEY_ISFAV, neighbour.getFavorite()).apply();
             }
         });
     }
@@ -116,5 +126,15 @@ public class ProfilActivity extends AppCompatActivity {
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.noTransformation())
                 .into(this.imageViewProfil);
+        //FAB color
+        showStartColor();
+    }
+
+    void showStartColor() {
+        if (neighbour.getFavorite()) {
+            floatingActionButtonProfil.setImageResource(R.drawable.ic_star_yellow_24dp);
+        } else {
+            floatingActionButtonProfil.setImageResource(R.drawable.ic_star_border_white_24dp);
+        }
     }
 }

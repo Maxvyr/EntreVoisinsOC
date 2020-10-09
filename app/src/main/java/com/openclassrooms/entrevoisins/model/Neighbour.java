@@ -1,7 +1,10 @@
 package com.openclassrooms.entrevoisins.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 
 import java.util.Objects;
 
@@ -29,7 +32,10 @@ public class Neighbour implements Parcelable {
     private String aboutMe;
 
     /** isFavorite */
-    private Boolean isFavorite = false;
+    private Boolean isFavorite;
+
+    /** KEY */
+    private static final String KEY_ISFAV = "isFavorite";
 
     /**
      * Constructor
@@ -96,7 +102,11 @@ public class Neighbour implements Parcelable {
     }
 
     public Boolean getFavorite() {
-        return isFavorite;
+        if (isFavorite == null) {
+            return  isFavorite = false;
+        } else {
+            return isFavorite;
+        }
     }
 
     public void setFavorite(Boolean favorite) {
