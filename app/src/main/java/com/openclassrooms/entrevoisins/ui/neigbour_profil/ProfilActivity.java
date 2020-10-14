@@ -49,6 +49,7 @@ public class ProfilActivity extends AppCompatActivity {
     //Over variables
     private static final String TAG = "ProfilActivity";
     private static final String KEY_EXTRA_NEIGHBOUR = "neighbour";
+    private static final String KEY_EXTRA_NEIGHBOUR_FAV = "neighbourFav";
     private static final String KEY_ISFAV = "isFavorite";
 
     Neighbour neighbour;
@@ -84,9 +85,13 @@ public class ProfilActivity extends AppCompatActivity {
                 neighbour.setFavorite(!neighbour.getFavorite());
                 // en fonction du click changer l'affichage
                 showStartColor();
-                Log.d(TAG, "onClick: isFAV : " + neighbour.getFavorite());
                 //on la new val stock dans un shared preferences
                 sharedPreferences.edit().putBoolean(KEY_ISFAV, neighbour.getFavorite()).apply();
+                Intent intent = new Intent();
+                intent.putExtra(KEY_EXTRA_NEIGHBOUR_FAV,neighbour);
+                setResult(RESULT_OK,intent);
+                // finish is return to parent activity
+                finish();
             }
         });
     }
@@ -98,7 +103,7 @@ public class ProfilActivity extends AppCompatActivity {
     public static void navigateTo(Activity activity, Neighbour neighbour) {
         Intent intent = new Intent(activity, ProfilActivity.class);
         intent.putExtra(KEY_EXTRA_NEIGHBOUR, neighbour);
-        ActivityCompat.startActivity(activity, intent,null);
+        ActivityCompat.startActivityForResult(activity, intent,1,null);
     }
 
     //Methode to receive value from previous fragment
