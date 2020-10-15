@@ -1,7 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neigbour_profil;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,9 +49,9 @@ public class ProfilActivity extends AppCompatActivity {
 
     //Over variables
     private static final String TAG = "ProfilActivity";
-    private static final String KEY_EXTRA_NEIGHBOUR = "neighbour";
-    private static final String KEY_EXTRA_NEIGHBOUR_FAV = "neighbourFav";
     private static final String KEY_ISFAV = "isFavorite";
+    public static final String KEY_NEIGHBOUR = "neighbour";
+    public static final String KEY_POSITION = "neighbour";
 
     Neighbour neighbour;
     SharedPreferences sharedPreferences;
@@ -81,17 +82,7 @@ public class ProfilActivity extends AppCompatActivity {
         floatingActionButtonProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //inverser la valeur lors du click
-                neighbour.setFavorite(!neighbour.getFavorite());
-                // en fonction du click changer l'affichage
-                showStartColor();
-                //on la new val stock dans un shared preferences
-                sharedPreferences.edit().putBoolean(KEY_ISFAV, neighbour.getFavorite()).apply();
-                Intent intent = new Intent();
-                intent.putExtra(KEY_EXTRA_NEIGHBOUR_FAV,neighbour);
-                setResult(RESULT_OK,intent);
-                // finish is return to parent activity
-                finish();
+                addToFav();
             }
         });
     }
@@ -102,17 +93,18 @@ public class ProfilActivity extends AppCompatActivity {
      */
     public static void navigateTo(Activity activity, Neighbour neighbour) {
         Intent intent = new Intent(activity, ProfilActivity.class);
-        intent.putExtra(KEY_EXTRA_NEIGHBOUR, neighbour);
-        ActivityCompat.startActivityForResult(activity, intent,1,null);
+        // recover neighbour and position
+        intent.putExtra(KEY_NEIGHBOUR, neighbour);
+        ActivityCompat.startActivityForResult(activity,intent, ListNeighbourActivity.REQUEST, null);
     }
 
     //Methode to receive value from previous fragment
     private void retrieveNeighbourFromIntent() {
-        // récuperer intent créer pour recup les valeurs
-        // du voisin que l'utilisateur a cliqué
+        // recover intent
+        // to get Neighbour and position of the neighbour in the list
         Intent intent = getIntent();
-        neighbour = intent.getParcelableExtra(KEY_EXTRA_NEIGHBOUR);
-        Log.d(TAG, "value receive " + neighbour);
+        neighbour = intent.getParcelableExtra(KEY_NEIGHBOUR);
+        Log.d(TAG, "value receive " + neighbour + " position dans la liste : " + neighbour.getId());
     }
 
     //Methode for updating the UI
@@ -135,7 +127,24 @@ public class ProfilActivity extends AppCompatActivity {
         showStartColor();
     }
 
+    void addToFav(){
+        //inverser la valeur lors du click
+        neighbour.setFavorite(!neighbour.getFavorite());
+        Log.d(TAG, "addToFav: " + neighbour.getId() +  " fav " + neighbour.getFavorite());
+        // en fonction du click changer l'affichage
+//        showStartColor();
+        //on la new val stock dans un shared preferences
+        sharedPreferences.edit().putBoolean(KEY_ISFAV, neighbour.getFavorite()).apply();
+        // repasse valeur dans l'activité précédente
+        Intent intentReturn = getIntent();
+        long position = neighbour.getId();
+        intentReturn.putExtra(KEY_POSITION, position);
+        setResult(Activity.RESULT_OK,intentReturn);
+        finish();
+    }
+
     void showStartColor() {
+        Log.d(TAG, "showStartColor: " + neighbour.getFavorite());
         if (neighbour.getFavorite()) {
             floatingActionButtonProfil.setImageResource(R.drawable.ic_star_yellow_24dp);
         } else {

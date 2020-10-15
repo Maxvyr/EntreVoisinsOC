@@ -60,7 +60,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         });
 
         /*
-         * permet de rendre le view holder clickable
+         * make view holder clickable
          * Send data with Event Bus on the NeighbourFragment
          */
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -1,10 +1,7 @@
 package com.openclassrooms.entrevoisins.model;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 
 import java.util.Objects;
 
@@ -34,9 +31,6 @@ public class Neighbour implements Parcelable {
     /** isFavorite */
     private Boolean isFavorite;
 
-    /** KEY */
-    private static final String KEY_ISFAV = "isFavorite";
-
     /**
      * Constructor
      * @param id
@@ -44,13 +38,14 @@ public class Neighbour implements Parcelable {
      * @param avatarUrl
      */
     public Neighbour(long id, String name, String avatarUrl, String address,
-                     String phoneNumber, String aboutMe) {
+                     String phoneNumber, String aboutMe, Boolean isFavorite) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
+        this.isFavorite = isFavorite;
     }
 
     public long getId() {
@@ -101,16 +96,12 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
-    public Boolean getFavorite() {
-        if (isFavorite == null) {
-            return  isFavorite = false;
-        } else {
-            return isFavorite;
-        }
-    }
-
     public void setFavorite(Boolean favorite) {
         this.isFavorite = favorite;
+    }
+
+    public Boolean getFavorite() {
+        return isFavorite;
     }
 
     @Override

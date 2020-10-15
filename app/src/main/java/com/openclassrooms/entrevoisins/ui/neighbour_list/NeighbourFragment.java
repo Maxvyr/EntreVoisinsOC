@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.LongDef;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +35,7 @@ public class NeighbourFragment extends Fragment {
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
     private static final String TAG = "NeighbourFragment";
+    public static final int REQUEST_FAV_UPDATE = 1;
 
 
     /**
@@ -58,12 +61,6 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //TODO
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -111,8 +108,9 @@ public class NeighbourFragment extends Fragment {
      */
     @Subscribe
     public void onEvent(SelectedNeighbourEvent event){
-        Log.d(TAG, "onEvent: " + event);
+        //recover NeighbourClik
         Neighbour neighbourSelected = event.getNeighbour();
+        Log.d(TAG, "neighbour: " + neighbourSelected);
         ProfilActivity.navigateTo(getActivity(),neighbourSelected);
     }
 }
