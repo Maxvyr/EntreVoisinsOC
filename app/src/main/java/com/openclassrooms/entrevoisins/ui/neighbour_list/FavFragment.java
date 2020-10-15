@@ -15,6 +15,7 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+import com.openclassrooms.entrevoisins.utils.NeighbourFav;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +67,10 @@ public class FavFragment extends Fragment {
     private void showList() {
         neighbours = apiService.getNeighbours();
         for (Neighbour neighbour : neighbours) {
+            //TODO verif comment bloquer la duplication des Voisins
             if (neighbour.getFavorite()) {
-                neighboursFav.add(neighbour);
+                NeighbourFav.neighbourFavList.add(neighbour);
+                neighboursFav = NeighbourFav.neighbourFavList;
                 Log.i(TAG, "showList: " + neighbour);
             }
         }

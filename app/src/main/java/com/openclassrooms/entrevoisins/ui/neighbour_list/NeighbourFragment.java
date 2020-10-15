@@ -100,6 +100,8 @@ public class NeighbourFragment extends Fragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
+        //TODO delete voisin on the new list
+//        NeighbourFav.neighbourFavList.remove((int) event.neighbour.getId());
         initList();
     }
 
