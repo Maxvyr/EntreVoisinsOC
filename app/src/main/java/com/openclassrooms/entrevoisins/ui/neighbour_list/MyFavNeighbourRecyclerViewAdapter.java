@@ -77,12 +77,11 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
     @Override
     public int getItemCount() {
-//        if (neighbours != null ) {
-//            return neighbours.size();
-//        } else {
-//            return 0;
-//        }
-        return 0;
+        if (neighbours != null ) {
+            return neighbours.size();
+        } else {
+            return 0;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

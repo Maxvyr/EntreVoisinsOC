@@ -16,6 +16,7 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavFragment extends Fragment {
@@ -24,7 +25,7 @@ public class FavFragment extends Fragment {
     private NeighbourApiService apiService;
     private RecyclerView recyclerViewFav;
     private List<Neighbour> neighbours;
-    private List<Neighbour> neighboursFav;
+    private List<Neighbour> neighboursFav = new ArrayList<>();
     private static final String TAG = "FavFragment";
 
     /**
@@ -64,12 +65,12 @@ public class FavFragment extends Fragment {
 
     private void showList() {
         neighbours = apiService.getNeighbours();
-//        for (Neighbour neighbour : neighbours) {
-//            if (neighbour.getFavorite()) {
-//                neighboursFav.add(neighbour);
-//                Log.i(TAG, "showList: " + neighbour);
-//            }
-//        }
-        recyclerViewFav.setAdapter(new MyFavNeighbourRecyclerViewAdapter(neighbours));
+        for (Neighbour neighbour : neighbours) {
+            if (neighbour.getFavorite()) {
+                neighboursFav.add(neighbour);
+                Log.i(TAG, "showList: " + neighbour);
+            }
+        }
+        recyclerViewFav.setAdapter(new MyFavNeighbourRecyclerViewAdapter(neighboursFav));
     }
 }

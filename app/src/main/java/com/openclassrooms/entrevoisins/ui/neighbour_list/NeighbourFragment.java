@@ -119,13 +119,12 @@ public class NeighbourFragment extends Fragment {
     @Subscribe(sticky = true)
     public void onEventFav(SelectedNeighbourFavEvent event) {
         Neighbour neighbourFav = event.getNeighbour();
-//        if (neighbourFav.getFavorite()) {
-//            NeighbourFav.neighbourFavList.add(neighbourFav);
-//        }
         Log.i(TAG, "neighbour fav receive: " + neighbourFav.getId());
         int position = (int) neighbourFav.getId() - 1;
-        //add an element if fav is True
-        mNeighbours.set(position, neighbourFav);
+        //set an element if fav of user is different from the new user
+        if (mNeighbours.get(position).getFavorite() != neighbourFav.getFavorite()) {
+            mNeighbours.set(position, neighbourFav);
+        }
         Log.i(TAG,
                 "onEventFav: neigbourFav name = " + neighbourFav.getName() + " fav " + neighbourFav.getFavorite());
     }
