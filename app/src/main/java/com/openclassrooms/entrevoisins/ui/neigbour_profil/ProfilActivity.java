@@ -19,8 +19,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,7 +98,7 @@ public class ProfilActivity extends AppCompatActivity {
         Intent intent = new Intent(activity, ProfilActivity.class);
         // recover neighbour and position
         intent.putExtra(KEY_NEIGHBOUR, neighbour);
-        ActivityCompat.startActivityForResult(activity,intent, ListNeighbourActivity.REQUEST, null);
+        ActivityCompat.startActivity(activity,intent, null);
     }
 
     //Methode to receive value from previous fragment
@@ -136,10 +139,7 @@ public class ProfilActivity extends AppCompatActivity {
         //on la new val stock dans un shared preferences
         sharedPreferences.edit().putBoolean(KEY_ISFAV, neighbour.getFavorite()).apply();
         // repasse valeur dans l'activité précédente
-        Intent intentReturn = getIntent();
-        long position = neighbour.getId();
-        intentReturn.putExtra(KEY_POSITION, position);
-        setResult(Activity.RESULT_OK,intentReturn);
+        EventBus.getDefault().postSticky(new SelectedNeighbourFavEvent(neighbour));
         finish();
     }
 

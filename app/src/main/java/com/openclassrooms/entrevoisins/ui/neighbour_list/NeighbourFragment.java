@@ -19,6 +19,7 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neigbour_profil.ProfilActivity;
@@ -112,5 +113,16 @@ public class NeighbourFragment extends Fragment {
         Neighbour neighbourSelected = event.getNeighbour();
         Log.d(TAG, "neighbour: " + neighbourSelected);
         ProfilActivity.navigateTo(getActivity(),neighbourSelected);
+    }
+
+    @Subscribe(sticky = true)
+    public void onEventFav(SelectedNeighbourFavEvent event) {
+            Neighbour neighbourFav = event.getNeighbour();
+            Log.i(TAG, "neighbour fav receive: " + neighbourFav.getId());
+            int position = (int) neighbourFav.getId() - 1;
+            //add an element if fav is True
+            mNeighbours.set(position, neighbourFav);
+            Log.i(TAG,
+                    "onEventFav: neigbourFav name = " + neighbourFav.getName() + " fav " + neighbourFav.getFavorite());
     }
 }
