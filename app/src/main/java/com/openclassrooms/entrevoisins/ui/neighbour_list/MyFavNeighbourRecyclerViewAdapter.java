@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.SelectedNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,11 +27,11 @@ import butterknife.ButterKnife;
 
 public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFavNeighbourRecyclerViewAdapter.ViewHolder> {
 
-    private static final String TAG = "MyFavNeighbourRecyclerView";
-    private final List<Neighbour> mNeighbours;
+    private static final String TAG = "MyFavNeighbourRV";
+    private final List<Neighbour> neighbours;
 
-    public MyFavNeighbourRecyclerViewAdapter(List<Neighbour> mNeighbours) {
-        this.mNeighbours = mNeighbours;
+    public MyFavNeighbourRecyclerViewAdapter(List<Neighbour> neighbours) {
+        this.neighbours = neighbours;
     }
 
     @NonNull
@@ -45,14 +46,14 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Neighbour neighbour = mNeighbours.get(position);
-        holder.mNeighbourName.setText(neighbour.getName());
-        Glide.with(holder.mNeighbourAvatar.getContext())
+        Neighbour neighbour = neighbours.get(position);
+        holder.neighbourName.setText(neighbour.getName());
+        Glide.with(holder.neighbourAvatar.getContext())
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
-                .into(holder.mNeighbourAvatar);
+                .into(holder.neighbourAvatar);
 
-        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: delete");
@@ -60,20 +61,37 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
             }
         });
 
+        /*
+         * make view holder clickable
+         * Send data with Event Bus on the NeighbourFragment
+         */
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"Click Button show Profil");
+                EventBus.getDefault().post(new SelectedNeighbourEvent(neighbour));
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
+//        if (neighbours != null ) {
+//            return neighbours.size();
+//        } else {
+//            return 0;
+//        }
         return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.item_list_avatar)
-        public ImageView mNeighbourAvatar;
+        public ImageView neighbourAvatar;
         @BindView(R.id.item_list_name)
-        public TextView mNeighbourName;
+        public TextView neighbourName;
         @BindView(R.id.item_list_delete_button)
-        public ImageButton mDeleteButton;
+        public ImageButton deleteButton;
 
 
         public ViewHolder(@NonNull View itemView) {

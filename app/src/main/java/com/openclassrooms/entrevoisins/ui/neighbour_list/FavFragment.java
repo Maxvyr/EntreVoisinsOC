@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,11 @@ import java.util.List;
 public class FavFragment extends Fragment {
 
     //variables
+    private NeighbourApiService apiService;
     private RecyclerView recyclerViewFav;
+    private List<Neighbour> neighbours;
+    private List<Neighbour> neighboursFav;
+    private static final String TAG = "FavFragment";
 
     /**
      * Use this factory method to create a new instance of
@@ -35,6 +40,8 @@ public class FavFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //temp
+        apiService = DI.getNeighbourApiService();
     }
 
     @Override
@@ -47,5 +54,22 @@ public class FavFragment extends Fragment {
         recyclerViewFav.setLayoutManager(new LinearLayoutManager(context));
         recyclerViewFav.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showList();
+    }
+
+    private void showList() {
+        neighbours = apiService.getNeighbours();
+//        for (Neighbour neighbour : neighbours) {
+//            if (neighbour.getFavorite()) {
+//                neighboursFav.add(neighbour);
+//                Log.i(TAG, "showList: " + neighbour);
+//            }
+//        }
+        recyclerViewFav.setAdapter(new MyFavNeighbourRecyclerViewAdapter(neighbours));
     }
 }

@@ -130,14 +130,13 @@ public class ProfilActivity extends AppCompatActivity {
         showStartColor();
     }
 
+    //Method when User click on the FAB button to add favoris
     void addToFav(){
         //inverser la valeur lors du click
         neighbour.setFavorite(!neighbour.getFavorite());
         Log.d(TAG, "addToFav: " + neighbour.getId() +  " fav " + neighbour.getFavorite());
         // en fonction du click changer l'affichage
-//        showStartColor();
-        //on la new val stock dans un shared preferences
-        sharedPreferences.edit().putBoolean(KEY_ISFAV, neighbour.getFavorite()).apply();
+        showStartColor();
         // repasse valeur dans l'activité précédente
         EventBus.getDefault().postSticky(new SelectedNeighbourFavEvent(neighbour));
         finish();

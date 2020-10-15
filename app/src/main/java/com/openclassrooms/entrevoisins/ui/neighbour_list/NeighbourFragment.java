@@ -23,6 +23,7 @@ import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neigbour_profil.ProfilActivity;
+import com.openclassrooms.entrevoisins.utils.NeighbourFav;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -117,12 +118,15 @@ public class NeighbourFragment extends Fragment {
 
     @Subscribe(sticky = true)
     public void onEventFav(SelectedNeighbourFavEvent event) {
-            Neighbour neighbourFav = event.getNeighbour();
-            Log.i(TAG, "neighbour fav receive: " + neighbourFav.getId());
-            int position = (int) neighbourFav.getId() - 1;
-            //add an element if fav is True
-            mNeighbours.set(position, neighbourFav);
-            Log.i(TAG,
-                    "onEventFav: neigbourFav name = " + neighbourFav.getName() + " fav " + neighbourFav.getFavorite());
+        Neighbour neighbourFav = event.getNeighbour();
+//        if (neighbourFav.getFavorite()) {
+//            NeighbourFav.neighbourFavList.add(neighbourFav);
+//        }
+        Log.i(TAG, "neighbour fav receive: " + neighbourFav.getId());
+        int position = (int) neighbourFav.getId() - 1;
+        //add an element if fav is True
+        mNeighbours.set(position, neighbourFav);
+        Log.i(TAG,
+                "onEventFav: neigbourFav name = " + neighbourFav.getName() + " fav " + neighbourFav.getFavorite());
     }
 }
