@@ -89,9 +89,11 @@ public class FavFragment extends Fragment {
 
     private void showList(Neighbour neighbourFav) {
         if(neighbourFav != null) {
-            if ((neighbourFav.getFavorite() && !neighboursFav.contains(neighbourFav))) {
-               neighboursFav.add(neighbourFav);;
+            if (neighbourFav.getFavorite() && !neighboursFav.contains(neighbourFav)) {
+               neighboursFav.add(neighbourFav);
                Log.i(TAG, "showList: " + neighbourFav);
+            } else if (!neighbourFav.getFavorite()) {
+                neighboursFav.remove(neighbourFav);
             }
             adapter.notifyDataSetChanged();
             stockListFavNeighbour(neighboursFav);
@@ -100,7 +102,7 @@ public class FavFragment extends Fragment {
 
     /**
      * Transform list NeighbourFav into a JSOn File
-     * @param neighboursFav
+     * @param neighboursFav list of Neighbour add to list Fav
      */
     private void stockListFavNeighbour(List<Neighbour> neighboursFav) {
         Gson gson = new Gson();
