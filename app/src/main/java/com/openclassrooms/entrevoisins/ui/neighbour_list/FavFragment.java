@@ -1,7 +1,9 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,28 +13,28 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-import com.openclassrooms.entrevoisins.utils.NeighbourFav;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavFragment extends Fragment {
 
-    //variables
-    private RecyclerView recyclerViewFav;
     private Neighbour neighbourFav;
     private List<Neighbour> neighboursFav = new ArrayList<>();
     private static final String TAG = "FavFragment";
+    public static final String KEY_LIST_FAV_NEIGHBOUR = "KEY_LIST_FAV_NEIGHBOUR";
     MyFavNeighbourRecyclerViewAdapter adapter = new MyFavNeighbourRecyclerViewAdapter(neighboursFav);
+    SharedPreferences sharedPreferences;
 
     /**
      * Use this factory method to create a new instance of
@@ -47,6 +49,10 @@ public class FavFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //init Shared Pref
+        Context context = getActivity();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -55,9 +61,11 @@ public class FavFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fav, container, false);
         Context context = view.getContext();
-        recyclerViewFav = (RecyclerView) view;
+        //variables
+        RecyclerView recyclerViewFav = (RecyclerView) view;
         recyclerViewFav.setLayoutManager(new LinearLayoutManager(context));
         recyclerViewFav.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+        recoverListFavNeighbour();
         recyclerViewFav.setAdapter(adapter);
         return view;
     }
@@ -86,6 +94,34 @@ public class FavFragment extends Fragment {
                Log.i(TAG, "showList: " + neighbourFav);
             }
             adapter.notifyDataSetChanged();
+            stockListFavNeighbour(neighboursFav);
+        }
+    }
+
+    /**
+     * Transform list NeighbourFav into a JSOn File
+     * @param neighboursFav
+     */
+    private void stockListFavNeighbour(List<Neighbour> neighboursFav) {
+        Gson gson = new Gson();
+        String listFav = gson.toJson(neighboursFav);
+        sharedPreferences.edit().putString(KEY_LIST_FAV_NEIGHBOUR,listFav).apply();
+    }
+
+    /**
+     * check if list save in shared pref if yes recover them
+     * call Gson Object
+     * get json string in shared pref
+     * convert my list of Generic in TypeToken
+     * stock generic list in List showing
+     */
+    private void recoverListFavNeighbour() {
+        if (sharedPreferences.contains(KEY_LIST_FAV_NEIGHBOUR)) {
+            Gson gson = new Gson();
+            String jsonListFav = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR,"");
+            Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
+//            neighboursFav = gson.fromJson(jsonListFav,listType);
+            Log.d(TAG, "recoverListFavNeighbour: Fav !!!"  + neighboursFav);
         }
     }
 
@@ -103,5 +139,7 @@ public class FavFragment extends Fragment {
         showList(neighbourFav);
         // for removing all data send with Event Bus after receive
         EventBus.getDefault().removeAllStickyEvents();
+        String sharedPreferencesString = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR, "");
+        Log.d(TAG, "onEventFav: sharedPref = " + sharedPreferencesString);
     }
 }

@@ -58,16 +58,12 @@ public class ProfilActivity extends AppCompatActivity {
     public static final String KEY_POSITION = "neighbour";
 
     Neighbour neighbour;
-    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
         ButterKnife.bind(this);
-
-        //init Shared Pref
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         //retrieve Neighbour
         retrieveNeighbourFromIntent();

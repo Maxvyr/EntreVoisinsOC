@@ -3,7 +3,9 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +39,8 @@ public class NeighbourFragment extends Fragment {
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
     private static final String TAG = "NeighbourFragment";
-
+    private static final String KEY_NEIGHBOUR_FRAGMENT = "KEY_NEIGHBOUR_FRAGMENT";
+    SharedPreferences sharedPreferences;
 
     /**
      * Create and return a new instance
@@ -51,6 +54,9 @@ public class NeighbourFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
+        //init Shared Pref
+        Context context = getActivity();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -60,7 +66,7 @@ public class NeighbourFragment extends Fragment {
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         return view;
     }
 
@@ -90,6 +96,12 @@ public class NeighbourFragment extends Fragment {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * Stock value in shared pref
+     */
+    private void stockListNeighbourAdd() {
     }
 
     /**
@@ -125,9 +137,9 @@ public class NeighbourFragment extends Fragment {
                 // if value id is equal set favorite for this neighbour
                 if (neighbour.getId() == neighbourFav.getId()) {
                     neighbour.setFavorite(neighbourFav.getFavorite());
+                    Log.i(TAG,
+                            "onEventFav: neigbourFav name = " + neighbourFav.getName() + " fav " + neighbourFav.getFavorite());
                 }
-                Log.i(TAG,
-                        "onEventFav: neigbourFav name = " + neighbourFav.getName() + " fav " + neighbourFav.getFavorite());
             }
     }
 }
