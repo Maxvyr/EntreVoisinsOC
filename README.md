@@ -30,6 +30,7 @@
 * [Library ButterKnife](https://github.com/JakeWharton/butterknife)
 * [Library Glide](https://github.com/bumptech/glide)
 * [Library EventBus](https://github.com/greenrobot/EventBus)
+* [Library GSON](https://github.com/google/gson)
 
 
 ## Troubleshooting
