@@ -99,7 +99,9 @@ public class FavFragment extends Fragment {
     @Subscribe(sticky = true)
     public void onEventFav(SelectedNeighbourFavEvent event) {
         Neighbour neighbourFav = event.getNeighbour();
-        Log.i(TAG, "neighbour fav receive: " + neighbourFav.getId());
+        Log.i(TAG, "neighbour fav receive: " + neighbourFav.getId() + " " + neighbourFav.getName());
         showList(neighbourFav);
+        // for removing all data send with Event Bus after receive
+        EventBus.getDefault().removeAllStickyEvents();
     }
 }
