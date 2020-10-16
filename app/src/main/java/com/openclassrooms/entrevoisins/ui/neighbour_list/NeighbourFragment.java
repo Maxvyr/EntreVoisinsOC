@@ -37,7 +37,6 @@ public class NeighbourFragment extends Fragment {
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
     private static final String TAG = "NeighbourFragment";
-    public static final int REQUEST_FAV_UPDATE = 1;
 
 
     /**
@@ -100,8 +99,7 @@ public class NeighbourFragment extends Fragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
-        //TODO delete voisin on the new list
-//        NeighbourFav.neighbourFavList.remove((int) event.neighbour.getId());
+        Log.i(TAG, "onDeleteNeighbour: " + event.neighbour.getName());
         initList();
     }
 
@@ -121,7 +119,6 @@ public class NeighbourFragment extends Fragment {
     @Subscribe(sticky = true)
     public void onEventFav(SelectedNeighbourFavEvent event) {
         Neighbour neighbourFav = event.getNeighbour();
-        Log.i(TAG, "neighbour fav receive: " + neighbourFav.getId());
         int position = (int) neighbourFav.getId() - 1;
         //set an element if fav of user is different from the new user
         if (mNeighbours.get(position).getFavorite() != neighbourFav.getFavorite()) {

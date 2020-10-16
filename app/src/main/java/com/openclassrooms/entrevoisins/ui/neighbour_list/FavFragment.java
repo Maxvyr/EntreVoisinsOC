@@ -13,9 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.utils.NeighbourFav;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +28,11 @@ import java.util.List;
 public class FavFragment extends Fragment {
 
     //variables
-    private NeighbourApiService apiService;
     private RecyclerView recyclerViewFav;
-    private List<Neighbour> neighbours;
+    private Neighbour neighbourFav;
     private List<Neighbour> neighboursFav = new ArrayList<>();
     private static final String TAG = "FavFragment";
+    MyFavNeighbourRecyclerViewAdapter adapter = new MyFavNeighbourRecyclerViewAdapter(neighboursFav);
 
     /**
      * Use this factory method to create a new instance of
@@ -42,8 +47,6 @@ public class FavFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //temp
-        apiService = DI.getNeighbourApiService();
     }
 
     @Override
@@ -54,26 +57,49 @@ public class FavFragment extends Fragment {
         Context context = view.getContext();
         recyclerViewFav = (RecyclerView) view;
         recyclerViewFav.setLayoutManager(new LinearLayoutManager(context));
-        recyclerViewFav.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerViewFav.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+        recyclerViewFav.setAdapter(adapter);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        showList();
     }
 
-    private void showList() {
-        neighbours = apiService.getNeighbours();
-        for (Neighbour neighbour : neighbours) {
-            //TODO verif comment bloquer la duplication des Voisins
-            if (neighbour.getFavorite()) {
-                NeighbourFav.neighbourFavList.add(neighbour);
-                neighboursFav = NeighbourFav.neighbourFavList;
-                Log.i(TAG, "showList: " + neighbour);
+    private void showList(Neighbour neighbourFav) {
+        if(neighbourFav != null) {
+            if ((neighbourFav.getFavorite() && !neighboursFav.contains(neighbourFav))) {
+               neighboursFav.add(neighbourFav);;
+               Log.i(TAG, "showList: " + neighbourFav);
             }
+            adapter.notifyDataSetChanged();
         }
-        recyclerViewFav.setAdapter(new MyFavNeighbourRecyclerViewAdapter(neighboursFav));
+    }
+
+    @Subscribe
+    public void onDeleteNeighbour(DeleteNeighbourEvent event) {
+        neighboursFav.remove(event.neighbour);
+        Log.i(TAG, "onDeleteNeighbour: " + event.neighbour.getName());
+        adapter.notifyDataSetChanged();
+    }
+
+    @Subscribe(sticky = true)
+    public void onEventFav(SelectedNeighbourFavEvent event) {
+        Neighbour neighbourFav = event.getNeighbour();
+        Log.i(TAG, "neighbour fav receive: " + neighbourFav.getId());
+        showList(neighbourFav);
     }
 }
