@@ -121,6 +121,7 @@ public class FavFragment extends Fragment {
         if (sharedPreferences.contains(KEY_LIST_FAV_NEIGHBOUR)) {
             Gson gson = new Gson();
             String jsonListFav = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR,"");
+            //TODO how to recover a list of generic
             Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
 //            neighboursFav = gson.fromJson(jsonListFav,listType);
             Log.d(TAG, "recoverListFavNeighbour: Fav !!!"  + neighboursFav);
