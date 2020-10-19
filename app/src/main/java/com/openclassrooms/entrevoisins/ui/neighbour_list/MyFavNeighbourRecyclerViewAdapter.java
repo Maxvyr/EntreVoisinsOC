@@ -47,6 +47,7 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Neighbour neighbour = neighbours.get(position);
+        Log.i(TAG, "onBindViewHolder: list " + neighbours);
         holder.neighbourName.setText(neighbour.getName());
         Glide.with(holder.neighbourAvatar.getContext())
                 .load(neighbour.getAvatarUrl())
@@ -77,6 +78,7 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
     @Override
     public int getItemCount() {
+        Log.i(TAG, "getItemCount: size list " + neighbours.size());
         return neighbours.size();
     }
 

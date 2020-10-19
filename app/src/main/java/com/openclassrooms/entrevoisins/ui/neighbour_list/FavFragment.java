@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
@@ -29,11 +30,10 @@ import java.util.List;
 
 public class FavFragment extends Fragment {
 
-    private Neighbour neighbourFav;
-    private List<Neighbour> neighboursFav = new ArrayList<>();
+    private List<Neighbour> neighboursFav;
     private static final String TAG = "FavFragment";
     public static final String KEY_LIST_FAV_NEIGHBOUR = "KEY_LIST_FAV_NEIGHBOUR";
-    MyFavNeighbourRecyclerViewAdapter adapter = new MyFavNeighbourRecyclerViewAdapter(neighboursFav);
+    MyFavNeighbourRecyclerViewAdapter adapter = null;
     SharedPreferences sharedPreferences;
 
     /**
@@ -52,7 +52,9 @@ public class FavFragment extends Fragment {
 
         //init Shared Pref
         Context context = getActivity();
+        neighboursFav = new ArrayList<>();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Log.i(TAG, "onCreate: call when " + neighboursFav);
     }
 
     @Override
@@ -66,7 +68,9 @@ public class FavFragment extends Fragment {
         recyclerViewFav.setLayoutManager(new LinearLayoutManager(context));
         recyclerViewFav.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         recoverListFavNeighbour();
+        Log.d(TAG, "onCreateView: neighbour fav list " + neighboursFav);
         recyclerViewFav.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         return view;
     }
 
@@ -118,13 +122,17 @@ public class FavFragment extends Fragment {
      * stock generic list in List showing
      */
     private void recoverListFavNeighbour() {
+        Log.i(TAG, "recoverListFavNeighbour: when");
         if (sharedPreferences.contains(KEY_LIST_FAV_NEIGHBOUR)) {
-            Gson gson = new Gson();
             String jsonListFav = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR,"");
-            //TODO how to recover a list of generic
+            Log.d(TAG, "recoverListFavNeighbour: jsonList Shared pref" + jsonListFav);
+            Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
-//            neighboursFav = gson.fromJson(jsonListFav,listType);
-            Log.d(TAG, "recoverListFavNeighbour: Fav !!!"  + neighboursFav);
+            neighboursFav = gson.fromJson(jsonListFav,listType);
+            adapter = new MyFavNeighbourRecyclerViewAdapter(neighboursFav);
+        } else {
+            //make empty list in the adapter
+            adapter = new MyFavNeighbourRecyclerViewAdapter(neighboursFav);
         }
     }
 
