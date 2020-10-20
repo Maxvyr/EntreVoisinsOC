@@ -1,9 +1,11 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_add;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
@@ -16,10 +18,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +50,9 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     private NeighbourApiService mApiService;
     private String mNeighbourImage;
+    public static final String TAG = "AddNeighbourActivity";
+    public static final String KEY_LIST_NEW_NEIGHBOUR = "KEY_LIST_NEW_NEIGHBOUR";
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +105,23 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 false
         );
         mApiService.createNeighbour(neighbour);
+        //add new neighbour to the list newNeighbours for save them
+        // in Shared Pref for next usage
+        List<Neighbour> newNeighbours = new ArrayList<>();
+        newNeighbours.add(neighbour);
+//        stockListNewNeighbour(newNeighbours);
+        Log.d(TAG, "addNeighbour: " + newNeighbours.size());
         finish();
+    }
+
+    /**
+     * Transform list NeighbourFav into a JSOn File
+     * @param newNeighbours list of Neighbour add to list Fav
+     */
+    private void stockListNewNeighbour(List<Neighbour> newNeighbours) {
+        Gson gson = new Gson();
+        String listNewNeighbours = gson.toJson(newNeighbours);
+        sharedPreferences.edit().putString(KEY_LIST_NEW_NEIGHBOUR,listNewNeighbours).apply();
     }
 
     /**

@@ -132,6 +132,7 @@ public class FavFragment extends Fragment {
             adapter = new MyFavNeighbourRecyclerViewAdapter(neighboursFav);
         } else {
             //make empty list in the adapter
+            neighboursFav = new ArrayList<>();
             adapter = new MyFavNeighbourRecyclerViewAdapter(neighboursFav);
         }
     }
