@@ -33,7 +33,7 @@ public class FavFragment extends Fragment {
     private List<Neighbour> neighboursFav;
     private static final String TAG = "FavFragment";
     public static final String KEY_LIST_FAV_NEIGHBOUR = "KEY_LIST_FAV_NEIGHBOUR";
-    MyFavNeighbourRecyclerViewAdapter adapter = null;
+    private MyFavNeighbourRecyclerViewAdapter adapter = null;
     SharedPreferences sharedPreferences;
 
     /**

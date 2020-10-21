@@ -21,11 +21,13 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +56,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
     private String mNeighbourImage;
     private static final String TAG = "AddNeighbourActivity";
     public static final String KEY_LIST_NEW_NEIGHBOUR = "KEY_LIST_NEW_NEIGHBOUR";
+    List<Neighbour> newNeighbours;
     SharedPreferences sharedPreferences;
 
     @Override
@@ -111,12 +114,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 aboutMeInput.getEditText().getText().toString(),
                 false
         );
-        mApiService.createNeighbour(neighbour);
-        //add new neighbour to the list newNeighbours for save them
-        // in Shared Pref for next usage
-        List<Neighbour> newNeighbours = new ArrayList<>();
-        newNeighbours.add(neighbour);
-        stockListNewNeighbour(newNeighbours);
+        addNeighbourToTheList(neighbour);
         Log.d(TAG, "addNeighbour: " + newNeighbours);
         finish();
     }
@@ -129,6 +127,33 @@ public class AddNeighbourActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String listNewNeighbours = gson.toJson(newNeighbours);
         sharedPreferences.edit().putString(KEY_LIST_NEW_NEIGHBOUR,listNewNeighbours).apply();
+        Log.d(TAG, "stockListNewNeighbour: add list to SharedPref");
+    }
+
+    /**
+     * Create list of new neighbour or add them to the new list
+     */
+    private void addNeighbourToTheList(Neighbour newNeighbour) {
+        //add new neighbour to the list newNeighbours for save them
+        // in Shared Pref for next usage
+        if (sharedPreferences.contains(KEY_LIST_NEW_NEIGHBOUR)) {
+            //if the list already exist add them to the list
+            String jsonListNewNeighbour = sharedPreferences.getString(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR,"");
+            Gson gson = new Gson();
+            Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
+            newNeighbours = gson.fromJson(jsonListNewNeighbour,listType);
+            Log.i(TAG, "addNeighbourToTheList: list already exist");
+        } else {
+            // else create an empty list
+            newNeighbours = new ArrayList<>();
+            Log.i(TAG, "addNeighbourToTheList: list already exist");
+
+        }
+        //add new neighbour to the list
+        newNeighbours.add(newNeighbour);
+        //stock them
+        stockListNewNeighbour(newNeighbours);
+
     }
 
     /**

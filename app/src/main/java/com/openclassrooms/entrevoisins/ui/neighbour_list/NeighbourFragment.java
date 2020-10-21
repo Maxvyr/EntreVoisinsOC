@@ -38,11 +38,11 @@ public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
-    private List<Neighbour> apiListNeighbours;
     private List<Neighbour> newListCreateNeighbours;
     private RecyclerView mRecyclerView;
+    private MyNeighbourRecyclerViewAdapter adapter = null;
     private static final String TAG = "NeighbourFragment";
-    private static final String KEY_NEIGHBOUR_FRAGMENT = "KEY_NEIGHBOUR_FRAGMENT";
+//    private static final String KEY_NEIGHBOUR_FRAGMENT = "KEY_NEIGHBOUR_FRAGMENT";
     SharedPreferences sharedPreferences;
 
     /**
@@ -70,6 +70,9 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+        Log.d(TAG, "onCreateView: call");
+        addTwoList();
+        mRecyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -80,7 +83,7 @@ public class NeighbourFragment extends Fragment {
         //recup list
         addTwoList();
         //plug la list a l'adapter du recycler view
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        adapter.notifyDataSetChanged();
     }
 
     private void addTwoList() {
@@ -90,16 +93,20 @@ public class NeighbourFragment extends Fragment {
             Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
             newListCreateNeighbours = gson.fromJson(jsonListNewNeighbour,listType);
-            Log.d(TAG, "initList: value newList" + newListCreateNeighbours);
+            Log.d(TAG, "addTwoList: value newList" + newListCreateNeighbours);
             mNeighbours.addAll(newListCreateNeighbours);
+            adapter = new MyNeighbourRecyclerViewAdapter(mNeighbours);
+        } else {
+            adapter = new MyNeighbourRecyclerViewAdapter(mNeighbours);
         }
-        Log.d(TAG, "initList: value" + mNeighbours);
+        Log.d(TAG, "addTwoList: value" + mNeighbours);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initList();
+        Log.d(TAG, "onResume: call");
+        adapter.notifyDataSetChanged();
     }
 
     @Override
