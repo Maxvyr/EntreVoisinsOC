@@ -1,8 +1,10 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_add;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -50,13 +52,18 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     private NeighbourApiService mApiService;
     private String mNeighbourImage;
-    public static final String TAG = "AddNeighbourActivity";
+    private static final String TAG = "AddNeighbourActivity";
     public static final String KEY_LIST_NEW_NEIGHBOUR = "KEY_LIST_NEW_NEIGHBOUR";
     SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        //init Shared Pref
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         setContentView(R.layout.activity_add_neighbour);
         ButterKnife.bind(this);
         setSupportActionBar(toolbarAdd);
@@ -109,8 +116,8 @@ public class AddNeighbourActivity extends AppCompatActivity {
         // in Shared Pref for next usage
         List<Neighbour> newNeighbours = new ArrayList<>();
         newNeighbours.add(neighbour);
-//        stockListNewNeighbour(newNeighbours);
-        Log.d(TAG, "addNeighbour: " + newNeighbours.size());
+        stockListNewNeighbour(newNeighbours);
+        Log.d(TAG, "addNeighbour: " + newNeighbours);
         finish();
     }
 

@@ -1,8 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,12 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.LongDef;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
@@ -25,10 +24,13 @@ import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neigbour_profil.ProfilActivity;
+import com.openclassrooms.entrevoisins.ui.neighbour_add.AddNeighbourActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,6 +38,8 @@ public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
+    private List<Neighbour> apiListNeighbours;
+    private List<Neighbour> newListCreateNeighbours;
     private RecyclerView mRecyclerView;
     private static final String TAG = "NeighbourFragment";
     private static final String KEY_NEIGHBOUR_FRAGMENT = "KEY_NEIGHBOUR_FRAGMENT";
@@ -74,9 +78,22 @@ public class NeighbourFragment extends Fragment {
      */
     private void initList() {
         //recup list
-        mNeighbours = mApiService.getNeighbours();
+        addTwoList();
         //plug la list a l'adapter du recycler view
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+    }
+
+    private void addTwoList() {
+        mNeighbours = mApiService.getNeighbours();
+        if (sharedPreferences.contains(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR)){
+            String jsonListNewNeighbour = sharedPreferences.getString(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR,"");
+            Gson gson = new Gson();
+            Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
+            newListCreateNeighbours = gson.fromJson(jsonListNewNeighbour,listType);
+            Log.d(TAG, "initList: value newList" + newListCreateNeighbours);
+            mNeighbours.addAll(newListCreateNeighbours);
+        }
+        Log.d(TAG, "initList: value" + mNeighbours);
     }
 
     @Override
