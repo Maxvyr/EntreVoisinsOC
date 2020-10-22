@@ -71,7 +71,7 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         Log.d(TAG, "onCreateView: call");
-        addTwoList();
+        recoverListNeigbour();
         mRecyclerView.setAdapter(adapter);
         return view;
     }
@@ -81,25 +81,23 @@ public class NeighbourFragment extends Fragment {
      */
     private void initList() {
         //recup list
-        addTwoList();
+        recoverListNeigbour();
         //plug la list a l'adapter du recycler view
         adapter.notifyDataSetChanged();
     }
 
-    private void addTwoList() {
-        mNeighbours = mApiService.getNeighbours();
+    private void recoverListNeigbour() {
         if (sharedPreferences.contains(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR)){
             String jsonListNewNeighbour = sharedPreferences.getString(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR,"");
             Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
-            newListCreateNeighbours = gson.fromJson(jsonListNewNeighbour,listType);
-            Log.d(TAG, "addTwoList: value newList" + newListCreateNeighbours);
-            mNeighbours.addAll(newListCreateNeighbours);
-            adapter = new MyNeighbourRecyclerViewAdapter(mNeighbours);
+            mNeighbours = gson.fromJson(jsonListNewNeighbour,listType);
+            Log.d(TAG, "addTwoList: value newList" + mNeighbours);
         } else {
-            adapter = new MyNeighbourRecyclerViewAdapter(mNeighbours);
+            mNeighbours = mApiService.getNeighbours();
         }
-        Log.d(TAG, "addTwoList: value" + mNeighbours);
+        adapter = new MyNeighbourRecyclerViewAdapter(mNeighbours);
+        Log.d(TAG, "recoverListNeigbour: value final " + mNeighbours);
     }
 
     @Override

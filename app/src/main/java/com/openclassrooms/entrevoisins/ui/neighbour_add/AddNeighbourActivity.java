@@ -113,7 +113,9 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 aboutMeInput.getEditText().getText().toString(),
                 false
         );
-        addNeighbourToTheList(neighbour);
+        mApiService.createNeighbour(neighbour);
+        // save new list
+        stockListNewNeighbourSharedPref(mApiService.getNeighbours());
         Log.d(TAG, "addNeighbour: " + newNeighbours);
         finish();
     }
@@ -127,32 +129,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
         String listNewNeighbours = gson.toJson(newNeighbours);
         sharedPreferences.edit().putString(KEY_LIST_NEW_NEIGHBOUR,listNewNeighbours).apply();
         Log.d(TAG, "stockListNewNeighbour: add list to SharedPref");
-    }
-
-    /**
-     * Create list of new neighbour or add them to the new list
-     */
-    private void addNeighbourToTheList(Neighbour newNeighbour) {
-        //add new neighbour to the list newNeighbours for save them
-        // in Shared Pref for next usage
-        if (sharedPreferences.contains(KEY_LIST_NEW_NEIGHBOUR)) {
-            //if the list already exist add them to the list
-            String jsonListNewNeighbour = sharedPreferences.getString(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR,"");
-            Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
-            newNeighbours = gson.fromJson(jsonListNewNeighbour,listType);
-            Log.i(TAG, "addNeighbourToTheList: list already exist");
-        } else {
-            // else create an empty list
-            newNeighbours = new ArrayList<>();
-            Log.i(TAG, "addNeighbourToTheList: list already exist");
-
-        }
-        //add new neighbour to the list
-        newNeighbours.add(newNeighbour);
-        //stock them
-        stockListNewNeighbourSharedPref(newNeighbours);
-
     }
 
     /**
