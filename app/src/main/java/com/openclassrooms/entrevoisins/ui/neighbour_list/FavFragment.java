@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.base.BaseFragment;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
@@ -27,13 +28,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavFragment extends Fragment {
+public class FavFragment extends BaseFragment {
 
     private List<Neighbour> neighboursFav;
     private static final String TAG = "FavFragment";
     public static final String KEY_LIST_FAV_NEIGHBOUR = "KEY_LIST_FAV_NEIGHBOUR";
     private MyFavNeighbourRecyclerViewAdapter adapter = null;
-    SharedPreferences sharedPreferences;
 
     /**
      * Use this factory method to create a new instance of
@@ -48,11 +48,7 @@ public class FavFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //init Shared Pref
-        Context context = getActivity();
         neighboursFav = new ArrayList<>();
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         Log.i(TAG, "onCreate: call when " + neighboursFav);
     }
 
@@ -71,18 +67,6 @@ public class FavFragment extends Fragment {
         recyclerViewFav.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

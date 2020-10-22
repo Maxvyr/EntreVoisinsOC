@@ -52,7 +52,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
     private String mNeighbourImage;
     private static final String TAG = "AddNeighbourActivity";
     public static final String KEY_LIST_NEW_NEIGHBOUR = "KEY_LIST_NEW_NEIGHBOUR";
-    List<Neighbour> newNeighbours;
     SharedPreferences sharedPreferences;
 
     @Override
@@ -113,7 +112,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
         mApiService.createNeighbour(neighbour);
         // save new list
         stockListNeighbourSharedPref(mApiService.getNeighbours());
-        Log.d(TAG, "addNeighbour: " + newNeighbours);
         finish();
     }
 
@@ -134,7 +132,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
      */
     String randomImage() {
         return "https://source.unsplash.com/random/200x200?sig="+ System.currentTimeMillis();
-//        return "https://i.pravatar.cc/150?u="+ System.currentTimeMillis();
     }
 
     /**

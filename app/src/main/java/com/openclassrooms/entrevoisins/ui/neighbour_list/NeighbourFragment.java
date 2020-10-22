@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.base.BaseFragment;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourEvent;
@@ -34,14 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NeighbourFragment extends Fragment {
+public class NeighbourFragment extends BaseFragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
     private MyNeighbourRecyclerViewAdapter adapter = null;
     private static final String TAG = "NeighbourFragment";
-    SharedPreferences sharedPreferences;
 
     /**
      * Create and return a new instance
@@ -55,9 +55,6 @@ public class NeighbourFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
-        //init Shared Pref
-        Context context = getActivity();
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -68,20 +65,10 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-        Log.d(TAG, "onCreateView: call");
+        Log.i(TAG, "onCreateView: call");
         recoverListNeigbour();
         mRecyclerView.setAdapter(adapter);
         return view;
-    }
-
-    /**
-     * Init the List of neighbours
-     */
-    private void initList() {
-        //recup list
-        recoverListNeigbour();
-        //plug la list a l'adapter du recycler view
-        adapter.notifyDataSetChanged();
     }
 
     private void recoverListNeigbour() {
@@ -90,7 +77,6 @@ public class NeighbourFragment extends Fragment {
             Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
             mNeighbours = gson.fromJson(jsonListNewNeighbour,listType);
-            Log.d(TAG, "addTwoList: value newList" + mNeighbours);
         } else {
             mNeighbours = mApiService.getNeighbours();
         }
@@ -100,21 +86,9 @@ public class NeighbourFragment extends Fragment {
 
     @Override
     public void onResume() {
+        recoverListNeigbour();
         super.onResume();
-        Log.d(TAG, "onResume: call");
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+        Log.i(TAG, "onResume: call");
     }
 
     /**
