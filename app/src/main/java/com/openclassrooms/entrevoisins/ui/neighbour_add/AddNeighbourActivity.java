@@ -1,6 +1,5 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_add;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -123,7 +122,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
      * Transform list NeighbourFav into a JSOn File
      * @param newNeighbours list of Neighbour add to list Fav
      */
-    private void stockListNewNeighbour(List<Neighbour> newNeighbours) {
+    private void stockListNewNeighbourSharedPref(List<Neighbour> newNeighbours) {
         Gson gson = new Gson();
         String listNewNeighbours = gson.toJson(newNeighbours);
         sharedPreferences.edit().putString(KEY_LIST_NEW_NEIGHBOUR,listNewNeighbours).apply();
@@ -152,7 +151,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
         //add new neighbour to the list
         newNeighbours.add(newNeighbour);
         //stock them
-        stockListNewNeighbour(newNeighbours);
+        stockListNewNeighbourSharedPref(newNeighbours);
 
     }
 
