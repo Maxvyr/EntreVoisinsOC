@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
@@ -100,7 +99,7 @@ public class FavFragment extends Fragment {
                 neighboursFav.remove(neighbourFav);
             }
             adapter.notifyDataSetChanged();
-            stockListFavNeighbour(neighboursFav);
+            stockListFavNeighbourSharedPref(neighboursFav);
         }
     }
 
@@ -108,7 +107,7 @@ public class FavFragment extends Fragment {
      * Transform list NeighbourFav into a JSOn File
      * @param neighboursFav list of Neighbour add to list Fav
      */
-    private void stockListFavNeighbour(List<Neighbour> neighboursFav) {
+    private void stockListFavNeighbourSharedPref(List<Neighbour> neighboursFav) {
         Gson gson = new Gson();
         String listFav = gson.toJson(neighboursFav);
         sharedPreferences.edit().putString(KEY_LIST_FAV_NEIGHBOUR,listFav).apply();
@@ -139,8 +138,11 @@ public class FavFragment extends Fragment {
 
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
+        //delete user
         neighboursFav.remove(event.neighbour);
         Log.i(TAG, "onDeleteNeighbour: " + event.neighbour.getName());
+        //save new List
+        stockListFavNeighbourSharedPref(neighboursFav);
         adapter.notifyDataSetChanged();
     }
 

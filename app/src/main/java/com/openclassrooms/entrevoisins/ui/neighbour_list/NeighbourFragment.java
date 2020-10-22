@@ -38,11 +38,9 @@ public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
-    private List<Neighbour> newListCreateNeighbours;
     private RecyclerView mRecyclerView;
     private MyNeighbourRecyclerViewAdapter adapter = null;
     private static final String TAG = "NeighbourFragment";
-//    private static final String KEY_NEIGHBOUR_FRAGMENT = "KEY_NEIGHBOUR_FRAGMENT";
     SharedPreferences sharedPreferences;
 
     /**
@@ -120,19 +118,22 @@ public class NeighbourFragment extends Fragment {
     }
 
     /**
-     * Stock value in shared pref
-     */
-    private void stockListNeighbourAdd() {
-    }
-
-    /**
      * Fired if the user clicks on a delete button
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
+        mNeighbours.remove(event.neighbour);
         Log.i(TAG, "onDeleteNeighbour: " + event.neighbour.getName());
-        initList();
+        stockListNeighbourSharedPrefUpadte(mNeighbours);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void stockListNeighbourSharedPrefUpadte(List<Neighbour> newNeighbours) {
+        Gson gson = new Gson();
+        String listNewNeighbours = gson.toJson(newNeighbours);
+        sharedPreferences.edit().putString(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR,listNewNeighbours).apply();
+        Log.d(TAG, "stockListNeighbourSharedPrefUpadte");
     }
 
     /*

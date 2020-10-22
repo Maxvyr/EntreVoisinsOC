@@ -20,14 +20,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -115,7 +112,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
         );
         mApiService.createNeighbour(neighbour);
         // save new list
-        stockListNewNeighbourSharedPref(mApiService.getNeighbours());
+        stockListNeighbourSharedPref(mApiService.getNeighbours());
         Log.d(TAG, "addNeighbour: " + newNeighbours);
         finish();
     }
@@ -124,7 +121,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
      * Transform list NeighbourFav into a JSOn File
      * @param newNeighbours list of Neighbour add to list Fav
      */
-    private void stockListNewNeighbourSharedPref(List<Neighbour> newNeighbours) {
+    public void stockListNeighbourSharedPref(List<Neighbour> newNeighbours) {
         Gson gson = new Gson();
         String listNewNeighbours = gson.toJson(newNeighbours);
         sharedPreferences.edit().putString(KEY_LIST_NEW_NEIGHBOUR,listNewNeighbours).apply();
