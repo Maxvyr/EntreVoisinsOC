@@ -39,7 +39,6 @@ public class NeighbourFragment extends BaseFragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
-    private RecyclerView mRecyclerView;
     private MyNeighbourRecyclerViewAdapter adapter = null;
     private static final String TAG = "NeighbourFragment";
 
@@ -55,6 +54,7 @@ public class NeighbourFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
+        Log.i(TAG, "onCreate: ");
     }
 
     @Override
@@ -62,12 +62,13 @@ public class NeighbourFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
-        mRecyclerView = (RecyclerView) view;
+        RecyclerView mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-        Log.i(TAG, "onCreateView: call");
         recoverListNeigbour();
+        Log.i(TAG, "onCreateView: call");
         mRecyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         return view;
     }
 
@@ -86,7 +87,6 @@ public class NeighbourFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        recoverListNeigbour();
         super.onResume();
         Log.i(TAG, "onResume: call");
     }
@@ -96,8 +96,10 @@ public class NeighbourFragment extends BaseFragment {
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
-        mApiService.deleteNeighbour(event.neighbour);
+        Log.i(TAG, "onDeleteNeighbour: " + mNeighbours.size());
         mNeighbours.remove(event.neighbour);
+        Log.i(TAG, "onDeleteNeighbour: " + mNeighbours.size());
+//        mApiService.deleteNeighbour(event.neighbour);
         Log.i(TAG, "onDeleteNeighbour: " + event.neighbour.getName());
         stockListNeighbourSharedPrefUpadte(mNeighbours);
         adapter.notifyDataSetChanged();
@@ -136,5 +138,8 @@ public class NeighbourFragment extends BaseFragment {
                             "onEventFav: neigbourFav name = " + neighbourFav.getName() + " fav " + neighbourFav.getFavorite());
                 }
             }
+        //maj list save
+        stockListNeighbourSharedPrefUpadte(mNeighbours);
+        adapter.notifyDataSetChanged();
     }
 }
