@@ -105,6 +105,9 @@ public class NeighboursListTest {
         onView(withId(R.id.coordinatorLayoutProfil)).check(matches(isDisplayed()));
     }
 
+    /**
+     * When we click on an item, check if the good user is show (name of the user)
+     */
     @Test
     public void myNeighbourList_clikcNeighbour_shouldShowingGoodNeighbourData() {
         // Retrieves the neighbour at positionItem
@@ -121,8 +124,6 @@ public class NeighboursListTest {
         onView(withId(R.id.namenNeighbourBlack))
                 .check(matches(withText(neighbourSelected.getName())));
     }
-
-    //-------------------------
 
     /**
      * When we click on the favorite button, the user is shown in the favorite list
