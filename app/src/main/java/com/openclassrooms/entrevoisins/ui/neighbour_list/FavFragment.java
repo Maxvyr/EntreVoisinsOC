@@ -104,12 +104,19 @@ public class FavFragment extends BaseFragment {
      * stock generic list in List showing
      */
     private void recoverListFavNeighbour() {
-        Log.i(TAG, "recoverListFavNeighbour: when");
+        String jsonListFav = "";
         if (sharedPreferences.contains(KEY_LIST_FAV_NEIGHBOUR)) {
-            String jsonListFav = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR,"");
+            jsonListFav = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR,"");
             Log.d(TAG, "recoverListFavNeighbour: jsonList Shared pref" + jsonListFav);
-            Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
-            neighboursFav = gson.fromJson(jsonListFav,listType);
+        }
+        updateList(jsonListFav);
+    }
+
+    private void updateList(String jsonListFav) {
+        if (sharedPreferences.contains(KEY_LIST_FAV_NEIGHBOUR)) {
+            //make list stock in the adapter
+            Type listType = new TypeToken<ArrayList<Neighbour>>() {}.getType();
+            neighboursFav = gson.fromJson(jsonListFav, listType);
             adapter = new MyFavNeighbourRecyclerViewAdapter(neighboursFav);
         } else {
             //make empty list in the adapter

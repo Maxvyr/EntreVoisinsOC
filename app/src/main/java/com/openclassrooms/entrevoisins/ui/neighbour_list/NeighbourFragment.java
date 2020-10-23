@@ -87,7 +87,6 @@ public class NeighbourFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume: call");
     }
 
     /**
