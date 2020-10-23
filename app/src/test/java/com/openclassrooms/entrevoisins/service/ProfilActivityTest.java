@@ -11,22 +11,19 @@ import org.junit.runners.JUnit4;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 /**
  * Unit test on Profile Neighbour Activity
  */
 @RunWith(JUnit4.class)
 public class ProfilActivityTest {
-    // METHODS -------------------------------------------------------------------------------------
+
 
     @Test
     public void ProfileNeighbourActivity_checkIfFavorite() {
         ProfilActivity profileActivity = new ProfilActivity();
 
-        Neighbour goodNeighbour = new Neighbour(1, "Caroline", "http://www.xxxxx.com","","","");
-        Neighbour badNeighbour = new Neighbour(2, "Silvain", "http://www.xxxxx.com","","","");
+        Neighbour goodNeighbour = new Neighbour(1, "Caroline", "http://www.xxxxx.com","","","",true);
+        Neighbour badNeighbour = new Neighbour(2, "Silvain", "http://www.xxxxx.com","","","",false);
         List<Neighbour> neighbourList = Collections.singletonList(goodNeighbour);
     }
 
