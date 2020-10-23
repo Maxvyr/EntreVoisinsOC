@@ -7,11 +7,14 @@ import android.preference.PreferenceManager;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+
 import org.greenrobot.eventbus.EventBus;
 
 public abstract class BaseFragment extends Fragment {
 
     protected SharedPreferences sharedPreferences;
+    protected Gson gson = new Gson();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,8 @@ public abstract class BaseFragment extends Fragment {
         Context context = getActivity();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
+
+//    protected abstract void initListFragment();
 
     //On start Register to listen Event Bus
     @Override

@@ -75,7 +75,6 @@ public class NeighbourFragment extends BaseFragment {
     private void recoverListNeigbour() {
         if (sharedPreferences.contains(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR)){
             String jsonListNewNeighbour = sharedPreferences.getString(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR,"");
-            Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
             mNeighbours = gson.fromJson(jsonListNewNeighbour,listType);
         } else {
@@ -106,7 +105,6 @@ public class NeighbourFragment extends BaseFragment {
     }
 
     private void stockListNeighbourSharedPrefUpadte(List<Neighbour> newNeighbours) {
-        Gson gson = new Gson();
         String listNewNeighbours = gson.toJson(newNeighbours);
         sharedPreferences.edit().putString(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR,listNewNeighbours).apply();
         Log.d(TAG, "stockListNeighbourSharedPrefUpadte");

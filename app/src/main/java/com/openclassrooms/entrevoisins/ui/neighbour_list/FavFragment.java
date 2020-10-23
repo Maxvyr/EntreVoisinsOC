@@ -92,7 +92,6 @@ public class FavFragment extends BaseFragment {
      * @param neighboursFav list of Neighbour add to list Fav
      */
     private void stockListFavNeighbourSharedPref(List<Neighbour> neighboursFav) {
-        Gson gson = new Gson();
         String listFav = gson.toJson(neighboursFav);
         sharedPreferences.edit().putString(KEY_LIST_FAV_NEIGHBOUR,listFav).apply();
     }
@@ -109,7 +108,6 @@ public class FavFragment extends BaseFragment {
         if (sharedPreferences.contains(KEY_LIST_FAV_NEIGHBOUR)) {
             String jsonListFav = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR,"");
             Log.d(TAG, "recoverListFavNeighbour: jsonList Shared pref" + jsonListFav);
-            Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
             neighboursFav = gson.fromJson(jsonListFav,listType);
             adapter = new MyFavNeighbourRecyclerViewAdapter(neighboursFav);
