@@ -87,6 +87,7 @@ public class NeighbourFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -96,9 +97,8 @@ public class NeighbourFragment extends BaseFragment {
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         Log.i(TAG, "onDeleteNeighbour: " + mNeighbours.size());
         mNeighbours.remove(event.neighbour);
-        Log.i(TAG, "onDeleteNeighbour: " + mNeighbours.size());
-//        mApiService.deleteNeighbour(event.neighbour);
-        Log.i(TAG, "onDeleteNeighbour: " + event.neighbour.getName());
+        Log.i(TAG,
+                "onDeleteNeighbour:  size list = " + mNeighbours.size() + " neighbour delete = " + event.neighbour.getName());
         stockListNeighbourSharedPrefUpadte(mNeighbours);
         adapter.notifyDataSetChanged();
     }
