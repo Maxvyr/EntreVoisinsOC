@@ -50,9 +50,8 @@ public class NeighboursListTest {
     private static final int ITEMS_COUNT = 12;
 
     //Variable
-    private static final int positionItem = 1;
     private ListNeighbourActivity mActivity;
-    private List<Neighbour> neighbourListTest = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
+    private final List<Neighbour> neighbourListTest = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
 
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
@@ -75,28 +74,12 @@ public class NeighboursListTest {
     }
 
     /**
-     * When we delete an item, the item is no more shown
-     */
-    @Test
-    public void myNeighboursList_deleteAction_shouldRemoveItem() {
-        final int itemsCount = this.neighbourListTest.size();
-
-        // Check list size
-        onView(withId(R.id.list_neighbours)).check(withItemCount(itemsCount));
-
-        // Click on a delete icon at the first position of the list
-        onView(withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(positionItem, new DeleteViewAction()));
-
-        // Check if list size itemsCount - 1
-        onView(withId(R.id.list_neighbours)).check(withItemCount(itemsCount - 1));
-    }
-
-    /**
      * When we click on an item, the user profile is shown
      */
     @Test
     public void myNeighboursList_clickNeighbour_openProfilActivity() {
+        //Variable
+        final int positionItem = 1;
         // When : we perform a click on an item of the list at the positionItem
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(positionItem,click()));
@@ -110,6 +93,8 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighbourList_clikcNeighbour_shouldShowingGoodNeighbourData() {
+        //Variable
+        final int positionItem = 0;
         // Retrieves the neighbour at positionItem
         Neighbour neighbourSelected = this.neighbourListTest.get(positionItem);
 
@@ -171,5 +156,26 @@ public class NeighboursListTest {
             onView(ViewMatchers.withId(R.id.container))
                     .perform(scrollRight());
         }
+    }
+
+
+    /**
+     * When we delete an item, the item is no more shown
+     */
+    @Test
+    public void myNeighboursList_deleteAction_shouldRemoveItem() {
+        //Variable
+        final int itemsCount = this.neighbourListTest.size();
+        final int positionItem = itemsCount - 1;
+
+        // Check list size
+        onView(withId(R.id.list_neighbours)).check(withItemCount(itemsCount));
+
+        // Click on a delete icon at the first position of the list
+        onView(withId(R.id.list_neighbours))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(positionItem, new DeleteViewAction()));
+
+        // Check if list size itemsCount - 1
+        onView(withId(R.id.list_neighbours)).check(withItemCount(itemsCount - 1));
     }
 }
