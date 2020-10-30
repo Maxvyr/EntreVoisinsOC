@@ -22,8 +22,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.AddNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -109,21 +112,10 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 aboutMeInput.getEditText().getText().toString(),
                 false
         );
-        mApiService.createNeighbour(neighbour);
-        // save new list
-        stockListNeighbourSharedPref(mApiService.getNeighbours());
+        //send neighbour to the NeighbourFragment
+        Log.i(TAG, "addNeighbour: ");
+        EventBus.getDefault().postSticky(new AddNeighbourEvent(neighbour));
         finish();
-    }
-
-    /**
-     * Transform list NeighbourFav into a JSOn File
-     * @param newNeighbours list of Neighbour add to list Fav
-     */
-    public void stockListNeighbourSharedPref(List<Neighbour> newNeighbours) {
-        Gson gson = new Gson();
-        String listNewNeighbours = gson.toJson(newNeighbours);
-        sharedPreferences.edit().putString(KEY_LIST_NEW_NEIGHBOUR,listNewNeighbours).apply();
-        Log.d(TAG, "stockListNewNeighbour: add list to SharedPref");
     }
 
     /**

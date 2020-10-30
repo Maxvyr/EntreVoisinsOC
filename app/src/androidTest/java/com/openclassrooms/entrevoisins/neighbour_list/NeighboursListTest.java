@@ -164,14 +164,14 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
-        //Variable
+        //Given
         final int itemsCount = this.neighbourListTest.size();
         final int positionItem = itemsCount - 1;
 
-        // Check list size
+        //When  list size
         onView(withId(R.id.list_neighbours)).check(withItemCount(itemsCount));
 
-        // Click on a delete icon at the first position of the list
+        //Then Click on a delete icon at the first position of the list
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(positionItem, new DeleteViewAction()));
 

@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.base.BaseFragment;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.AddNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
@@ -84,12 +85,6 @@ public class NeighbourFragment extends BaseFragment {
         Log.d(TAG, "recoverListNeigbour: value final " + mNeighbours);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged();
-    }
-
     /**
      * Fired if the user clicks on a delete button
      */
@@ -107,6 +102,21 @@ public class NeighbourFragment extends BaseFragment {
         String listNewNeighbours = gson.toJson(newNeighbours);
         sharedPreferences.edit().putString(AddNeighbourActivity.KEY_LIST_NEW_NEIGHBOUR,listNewNeighbours).apply();
         Log.d(TAG, "stockListNeighbourSharedPrefUpadte");
+    }
+
+    /**
+     * Add the user clicks on a delete button
+     */
+    @Subscribe(sticky = true)
+    public void onAddNeighbour(AddNeighbourEvent event) {
+        Log.i(TAG, "onAddNeighbour: " + mNeighbours.size());
+        mNeighbours.add(event.getNeighbour());
+        Log.i(TAG,
+                "onAddNeighbour:  size list = " + mNeighbours.size() + " neighbour delete = " + event.getNeighbour().getName());
+        // for removing all data send with Event Bus after receive
+        EventBus.getDefault().removeAllStickyEvents();
+        stockListNeighbourSharedPrefUpadte(mNeighbours);
+        adapter.notifyDataSetChanged();
     }
 
     /*
