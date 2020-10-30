@@ -11,7 +11,7 @@ import org.junit.runners.JUnit4;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -27,6 +27,9 @@ public class NeighbourServiceTest {
         service = DI.getNewInstanceApiService();
     }
 
+    /**
+     * Delete Neighbour with success
+     */
     @Test
     public void deleteNeighbourWithSuccess() {
         Neighbour neighbourToDelete = service.getNeighbours().get(0);
@@ -34,18 +37,33 @@ public class NeighbourServiceTest {
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
     }
 
+    /**
+     * Add Neighbour with success
+     */
     @Test
     public void addNeighbourWithSuccess() {
-        Neighbour neighbourToAdd = new Neighbour(42,"bob","","Tatouine","00000000","carotte",false);
+        Neighbour neighbourToAdd = new Neighbour(42,"bob","","Saturne","00000000","carotte",false);
         service.createNeighbour(neighbourToAdd);
         assertTrue(service.getNeighbours().contains(neighbourToAdd));
     }
 
+    /**
+     * Add Neighbour to favorite with success
+     */
     @Test
     public void addToFavoriteNeighbourWithSucces() {
+        Neighbour neighbourToAddFav = service.getNeighbours().get(3);
+        service.isFav(neighbourToAddFav);
+        assertTrue(neighbourToAddFav.getFavorite());
     }
 
+    /**
+     * Neigbour addToFav list is equal to Neigbour with fav chack in list
+     */
     @Test
     public void getFavoriteListNeighbourWithSucces() {
+        Neighbour neighbourAddFav = service.getNeighbours().get(5);
+        List<Neighbour> neighboursFavList = service.getFavNeighbours(neighbourAddFav);
+        assertSame(neighboursFavList.get(0), service.getNeighbours().get(5));
     }
 }
