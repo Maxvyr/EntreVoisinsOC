@@ -97,11 +97,9 @@ public class NeighboursListTest {
         final int positionItem = 0;
         // Retrieves the neighbour at positionItem
         Neighbour neighbourSelected = this.neighbourListTest.get(positionItem);
-
         // When : we perform a click on an item of the list at the positionItem
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(positionItem,click()));
-
         // Then : the user profile is shown and it displays the good personal data
         onView(withId(R.id.namenNeighbourWhite))
                 .check(matches(withText(neighbourSelected.getName())));
@@ -115,47 +113,38 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_clickNeighbour_addToFavorite_shouldBeFavorite() {
-
+        //Variable
+        final int positionItemListNeighbour = 10;
+        final int positionItemListFavNeighbour = 0;
+        final int sizelistFav = 1;
         // When : We perform a click on favorite button of ProfileActivity
-        for (int i=0 ; i<this.neighbourListTest.size() ; i++) {
-            // Clicks on item of RecyclerView
-            onView(withId(R.id.list_neighbours))
-                    .perform(RecyclerViewActions.actionOnItemAtPosition(i,click()));
-
-            // Clicks on FAB of ProfileActivity
-            onView(ViewMatchers.withId(R.id.floatingActionButtonProfil))
-                    .perform((ViewAction) click());
-        }
-
+        // Clicks on first item of RecyclerView
+        onView(withId(R.id.list_neighbours))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(positionItemListNeighbour,click()));
+        // Clicks on FAB of ProfileActivity
+        onView(ViewMatchers.withId(R.id.floatingActionButtonProfil))
+                .perform((ViewAction) click());
         // Swipe from NeighbourFragment to FavoritesFragment of ViewPager
         onView(ViewMatchers.withId(R.id.container))
                 .perform(scrollRight());
-
-        // Then: Checks if the RecyclerView contains all neighbour of the list
+        // Then: Checks if the RecyclerView contains 2 neighbour of the list
         onView(ViewMatchers.withId(R.id.list_fav_neighbours))
-                .check(withItemCount(this.neighbourListTest.size()));
-
+                .check(withItemCount(sizelistFav));
         // Checks if the neighbour are the good neighbour
-        for (int i=0 ; i<this.neighbourListTest.size() ; i++) {
             // Clicks on item of RecyclerView
             onView(ViewMatchers.withId(R.id.list_fav_neighbours))
-                    .perform(RecyclerViewActions.actionOnItemAtPosition(i, click()));
+                    .perform(RecyclerViewActions.actionOnItemAtPosition(positionItemListFavNeighbour, click()));
 
             // Then : the user profile is shown and it displays the good personal data
             onView(ViewMatchers.withId(R.id.namenNeighbourBlack))
-                    .check(matches(withText(this.neighbourListTest.get(i).getName())));
+                    .check(matches(withText(this.neighbourListTest.get(positionItemListNeighbour).getName())));
 
             onView(ViewMatchers.withId(R.id.namenNeighbourWhite))
-                    .check(matches(withText(this.neighbourListTest.get(i).getName())));
+                    .check(matches(withText(this.neighbourListTest.get(positionItemListNeighbour).getName())));
 
             // Clicks on the Up button of the ToolBar [or pressBack()]
             onView(withContentDescription("Navigate up"))
                     .perform(click());
-
-            // Swipe from NeighbourFragment to FavoritesFragment of ViewPager
-            onView(ViewMatchers.withId(R.id.container))
-                    .perform(scrollRight());
-        }
     }
 
 
