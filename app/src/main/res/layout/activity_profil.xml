@@ -27,18 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- ToolBar transparent -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarProfil"
-            android:theme="@style/AppTheme.PopupOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            app:title=" "
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
         <!--   Image User -->
         <ImageView
             android:id="@+id/imageViewProfil"
@@ -50,6 +38,17 @@
             android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/backgrounds/scenic"
             android:contentDescription="@string/imageUser" />
+
+        <!-- ToolBar transparent -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarProfil"
+            android:theme="@style/AppTheme.PopupOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title=" "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <!--TextView White-->
         <TextView
