@@ -68,7 +68,6 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
-        // First scroll to the position that needs to be matched and click on it.
         onView(withId(R.id.list_neighbours))
                 .check(matches(hasMinimumChildCount(1)));
     }
@@ -80,11 +79,8 @@ public class NeighboursListTest {
     public void myNeighboursList_clickNeighbour_openProfilActivity() {
         //Variable
         final int positionItem = 1;
-        // When : we perform a click on an item of the list at the positionItem
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(positionItem,click()));
-
-        // Then : the user profile is shown
         onView(withId(R.id.coordinatorLayoutProfil)).check(matches(isDisplayed()));
     }
 
@@ -95,12 +91,9 @@ public class NeighboursListTest {
     public void myNeighbourList_clikcNeighbour_shouldShowingGoodNeighbourData() {
         //Variable
         final int positionItem = 0;
-        // Retrieves the neighbour at positionItem
         Neighbour neighbourSelected = this.neighbourListTest.get(positionItem);
-        // When : we perform a click on an item of the list at the positionItem
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(positionItem,click()));
-        // Then : the user profile is shown and it displays the good personal data
         onView(withId(R.id.namenNeighbourWhite))
                 .check(matches(withText(neighbourSelected.getName())));
 
@@ -117,28 +110,19 @@ public class NeighboursListTest {
         final int positionItemListNeighbour = 10;
         final int positionItemListFavNeighbour = 0;
         final int sizelistFav = 1;
-        // When : We perform a click on favorite button of ProfileActivity
-        // Clicks on first item of RecyclerView
+
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(positionItemListNeighbour,click()));
-        // Clicks on FAB of ProfileActivity
         onView(ViewMatchers.withId(R.id.floatingActionButtonProfil))
                 .perform((ViewAction) click());
-        // Swipe from NeighbourFragment to FavoritesFragment of ViewPager
         onView(ViewMatchers.withId(R.id.container))
                 .perform(scrollRight());
-        // Then: Checks if the RecyclerView contains 2 neighbour of the list
         onView(ViewMatchers.withId(R.id.list_fav_neighbours))
                 .check(withItemCount(sizelistFav));
-        // Checks if the neighbour are the good neighbour
-        // Clicks on item of RecyclerView
         onView(ViewMatchers.withId(R.id.list_fav_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(positionItemListFavNeighbour, click()));
-
-        // Then : the user profile is shown and it displays the good personal data
         onView(ViewMatchers.withId(R.id.namenNeighbourBlack))
                 .check(matches(withText(this.neighbourListTest.get(positionItemListNeighbour).getName())));
-
         onView(ViewMatchers.withId(R.id.namenNeighbourWhite))
                 .check(matches(withText(this.neighbourListTest.get(positionItemListNeighbour).getName())));
     }
@@ -152,15 +136,9 @@ public class NeighboursListTest {
         //Given
         final int itemsCount = this.neighbourListTest.size();
         final int positionItem = itemsCount - 1;
-
-        //When  list size
         onView(withId(R.id.list_neighbours)).check(withItemCount(itemsCount));
-
-        //Then Click on a delete icon at the first position of the list
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(positionItem, new DeleteViewAction()));
-
-        // Check if list size itemsCount - 1
         onView(withId(R.id.list_neighbours)).check(withItemCount(itemsCount - 1));
     }
 }

@@ -11,7 +11,6 @@ import org.junit.runners.JUnit4;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -59,7 +58,7 @@ public class NeighbourServiceTest {
     }
 
     /**
-     * Neigbour addToFav list is equal to Neigbour with fav chack in list
+     * Neigbour addToFav list is equal to Neigbour with fav check in list
      */
     @Test
     public void getFavoriteListNeighbourWithSucces() {
