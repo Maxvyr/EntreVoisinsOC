@@ -20,6 +20,7 @@ import com.openclassrooms.entrevoisins.base.BaseFragment;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.utils.SharedPref;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -62,7 +63,7 @@ public class FavFragment extends BaseFragment {
         RecyclerView recyclerViewFav = (RecyclerView) view;
         recyclerViewFav.setLayoutManager(new LinearLayoutManager(context));
         recyclerViewFav.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-        recoverListFavNeighbour();
+        new SharedPref().recoverListFavNeighbour(sharedPreferences,gson,KEY_LIST_FAV_NEIGHBOUR,neighboursFav,adapter);
         Log.d(TAG, "onCreateView: neighbour fav list " + neighboursFav);
         recyclerViewFav.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -83,34 +84,35 @@ public class FavFragment extends BaseFragment {
                 neighboursFav.remove(neighbourFav);
             }
             adapter.notifyDataSetChanged();
-            stockListFavNeighbourSharedPref(neighboursFav);
+            new SharedPref().stockListFavNeighbourSharedPref(neighboursFav, sharedPreferences,gson,
+                    KEY_LIST_FAV_NEIGHBOUR);
         }
     }
 
-    /**
-     * Transform list NeighbourFav into a JSOn File
-     * @param neighboursFav list of Neighbour add to list Fav
-     */
-    private void stockListFavNeighbourSharedPref(List<Neighbour> neighboursFav) {
-        String listFav = gson.toJson(neighboursFav);
-        sharedPreferences.edit().putString(KEY_LIST_FAV_NEIGHBOUR,listFav).apply();
-    }
+//    /**
+//     * Transform list NeighbourFav into a JSOn File
+//     * @param neighboursFav list of Neighbour add to list Fav
+//     */
+//    private void stockListFavNeighbourSharedPref(List<Neighbour> neighboursFav) {
+//        String listFav = gson.toJson(neighboursFav);
+//        sharedPreferences.edit().putString(KEY_LIST_FAV_NEIGHBOUR,listFav).apply();
+//    }
 
-    /**
-     * check if list save in shared pref if yes recover them
-     * call Gson Object
-     * get json string in shared pref
-     * convert my list of Generic in TypeToken
-     * stock generic list in List showing
-     */
-    private void recoverListFavNeighbour() {
-        String jsonListFav = "";
-        if (sharedPreferences.contains(KEY_LIST_FAV_NEIGHBOUR)) {
-            jsonListFav = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR,"");
-            Log.d(TAG, "recoverListFavNeighbour: jsonList Shared pref" + jsonListFav);
-        }
-        updateList(jsonListFav);
-    }
+//    /**
+//     * check if list save in shared pref if yes recover them
+//     * call Gson Object
+//     * get json string in shared pref
+//     * convert my list of Generic in TypeToken
+//     * stock generic list in List showing
+//     */
+//    private void recoverListFavNeighbour() {
+//        String jsonListFav = "";
+//        if (sharedPreferences.contains(KEY_LIST_FAV_NEIGHBOUR)) {
+//            jsonListFav = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR,"");
+//            Log.d(TAG, "recoverListFavNeighbour: jsonList Shared pref" + jsonListFav);
+//        }
+//        updateList(jsonListFav);
+//    }
 
     private void updateList(String jsonListFav) {
         if (sharedPreferences.contains(KEY_LIST_FAV_NEIGHBOUR)) {
@@ -131,7 +133,7 @@ public class FavFragment extends BaseFragment {
         neighboursFav.remove(event.neighbour);
         Log.i(TAG, "onDeleteNeighbour: " + event.neighbour.getName());
         //save new List
-        stockListFavNeighbourSharedPref(neighboursFav);
+        new SharedPref().stockListFavNeighbourSharedPref(neighboursFav, sharedPreferences,gson,KEY_LIST_FAV_NEIGHBOUR);
         adapter.notifyDataSetChanged();
     }
 
