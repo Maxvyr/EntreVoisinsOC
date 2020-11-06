@@ -32,11 +32,11 @@ public interface NeighbourApiService {
      * Check neighbour fav
      * @param neighbour
      */
-    void isFav(Neighbour neighbour);
+    void addFav(Neighbour neighbour);
 
     /**
      * Compare with getNeighbour
      * @return
      */
-    List<Neighbour> getFavNeighbours(Neighbour neighbour);
+    List<Neighbour> getFavNeighbours();
 }

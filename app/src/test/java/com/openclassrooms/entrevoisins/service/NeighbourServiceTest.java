@@ -53,8 +53,9 @@ public class NeighbourServiceTest {
     @Test
     public void addToFavoriteNeighbourWithSucces() {
         Neighbour neighbourToAddFav = service.getNeighbours().get(3);
-        service.isFav(neighbourToAddFav);
-        assertTrue(neighbourToAddFav.getFavorite());
+        service.addFav(neighbourToAddFav);
+        Boolean isFavNeighbour = service.getNeighbours().get(3).getFavorite();
+        assertTrue(isFavNeighbour);
     }
 
     /**
@@ -62,8 +63,9 @@ public class NeighbourServiceTest {
      */
     @Test
     public void getFavoriteListNeighbourWithSucces() {
-        Neighbour neighbourAddFav = service.getNeighbours().get(5);
-        List<Neighbour> neighboursFavList = service.getFavNeighbours(neighbourAddFav);
-        assertSame(neighboursFavList.get(0), service.getNeighbours().get(5));
+        Neighbour neighbour = service.getNeighbours().get(5);
+        service.addFav(neighbour);
+        List<Neighbour> neighbourListFav = service.getFavNeighbours();
+        assertTrue(neighbourListFav.contains(neighbour));
     }
 }

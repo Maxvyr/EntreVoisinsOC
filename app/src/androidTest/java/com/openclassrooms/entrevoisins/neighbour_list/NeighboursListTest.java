@@ -131,20 +131,16 @@ public class NeighboursListTest {
         onView(ViewMatchers.withId(R.id.list_fav_neighbours))
                 .check(withItemCount(sizelistFav));
         // Checks if the neighbour are the good neighbour
-            // Clicks on item of RecyclerView
-            onView(ViewMatchers.withId(R.id.list_fav_neighbours))
-                    .perform(RecyclerViewActions.actionOnItemAtPosition(positionItemListFavNeighbour, click()));
+        // Clicks on item of RecyclerView
+        onView(ViewMatchers.withId(R.id.list_fav_neighbours))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(positionItemListFavNeighbour, click()));
 
-            // Then : the user profile is shown and it displays the good personal data
-            onView(ViewMatchers.withId(R.id.namenNeighbourBlack))
-                    .check(matches(withText(this.neighbourListTest.get(positionItemListNeighbour).getName())));
+        // Then : the user profile is shown and it displays the good personal data
+        onView(ViewMatchers.withId(R.id.namenNeighbourBlack))
+                .check(matches(withText(this.neighbourListTest.get(positionItemListNeighbour).getName())));
 
-            onView(ViewMatchers.withId(R.id.namenNeighbourWhite))
-                    .check(matches(withText(this.neighbourListTest.get(positionItemListNeighbour).getName())));
-
-            // Clicks on the Up button of the ToolBar [or pressBack()]
-            onView(withContentDescription("Navigate up"))
-                    .perform(click());
+        onView(ViewMatchers.withId(R.id.namenNeighbourWhite))
+                .check(matches(withText(this.neighbourListTest.get(positionItemListNeighbour).getName())));
     }
 
 
