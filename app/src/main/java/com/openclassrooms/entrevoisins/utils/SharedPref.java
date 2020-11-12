@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SharedPref {
+public abstract class SharedPref {
     /**
      * Transform list NeighbourFav into a JSOn File
      * @param neighboursFav list of Neighbour add to list Fav
@@ -20,9 +20,9 @@ public class SharedPref {
      * @param sharedPreferences SharedPreferences instance
      * @param KEY String
      */
-    public void stockListFavNeighbourSharedPref(List<Neighbour> neighboursFav,
-                                                      SharedPreferences sharedPreferences,
-                                                 Gson gson, String KEY) {
+    public static void stockListFavNeighbourSharedPref(List<Neighbour> neighboursFav,
+                                                       SharedPreferences sharedPreferences,
+                                                       Gson gson, String KEY) {
         String listFav = gson.toJson(neighboursFav);
         sharedPreferences.edit().putString(KEY,listFav).apply();
     }
@@ -34,8 +34,8 @@ public class SharedPref {
      * convert my list of Generic in TypeToken
      * stock generic list in List showing
      */
-    public void recoverListFavNeighbour(SharedPreferences sharedPreferences,Gson gson, String KEY,
-                                               List<Neighbour> neighboursFav,MyFavNeighbourRecyclerViewAdapter adapter) {
+    public static void recoverListFavNeighbour(SharedPreferences sharedPreferences, Gson gson, String KEY,
+                                               List<Neighbour> neighboursFav, MyFavNeighbourRecyclerViewAdapter adapter) {
         String jsonListFav = "";
         if (sharedPreferences.contains(KEY)) {
             jsonListFav = sharedPreferences.getString(KEY,"");

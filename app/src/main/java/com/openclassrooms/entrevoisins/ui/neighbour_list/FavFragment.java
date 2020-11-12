@@ -63,7 +63,7 @@ public class FavFragment extends BaseFragment {
         RecyclerView recyclerViewFav = (RecyclerView) view;
         recyclerViewFav.setLayoutManager(new LinearLayoutManager(context));
         recyclerViewFav.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-        new SharedPref().recoverListFavNeighbour(sharedPreferences,gson,KEY_LIST_FAV_NEIGHBOUR,neighboursFav,adapter);
+        SharedPref.recoverListFavNeighbour(sharedPreferences,gson,KEY_LIST_FAV_NEIGHBOUR,neighboursFav,adapter);
         Log.d(TAG, "onCreateView: neighbour fav list " + neighboursFav);
         recyclerViewFav.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -84,7 +84,7 @@ public class FavFragment extends BaseFragment {
                 neighboursFav.remove(neighbourFav);
             }
             adapter.notifyDataSetChanged();
-            new SharedPref().stockListFavNeighbourSharedPref(neighboursFav, sharedPreferences,gson,
+            SharedPref.stockListFavNeighbourSharedPref(neighboursFav, sharedPreferences,gson,
                     KEY_LIST_FAV_NEIGHBOUR);
         }
     }
@@ -133,7 +133,7 @@ public class FavFragment extends BaseFragment {
         neighboursFav.remove(event.neighbour);
         Log.i(TAG, "onDeleteNeighbour: " + event.neighbour.getName());
         //save new List
-        new SharedPref().stockListFavNeighbourSharedPref(neighboursFav, sharedPreferences,gson,KEY_LIST_FAV_NEIGHBOUR);
+        SharedPref.stockListFavNeighbourSharedPref(neighboursFav,sharedPreferences,gson,KEY_LIST_FAV_NEIGHBOUR);
         adapter.notifyDataSetChanged();
     }
 
