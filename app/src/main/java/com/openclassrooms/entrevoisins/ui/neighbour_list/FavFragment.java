@@ -1,19 +1,15 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.base.BaseFragment;
@@ -67,15 +63,6 @@ public class FavFragment extends BaseFragment {
         recyclerViewFav.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         return view;
-    }
-
-    /**
-     * Transform list NeighbourFav into a JSOn File
-     * @param neighboursFav list of Neighbour add to list Fav
-     */
-    private void stockListFavNeighbourSharedPref(List<Neighbour> neighboursFav) {
-        String listFav = gson.toJson(neighboursFav);
-        sharedPreferences.edit().putString(KEY_LIST_FAV_NEIGHBOUR,listFav).apply();
     }
 
     /**
@@ -139,5 +126,14 @@ public class FavFragment extends BaseFragment {
             adapter.notifyDataSetChanged();
             stockListFavNeighbourSharedPref(neighboursFav);
         }
+    }
+
+    /**
+     * Transform list NeighbourFav into a JSOn File
+     * @param neighboursFav list of Neighbour add to list Fav
+     */
+    private void stockListFavNeighbourSharedPref(List<Neighbour> neighboursFav) {
+        String listFav = gson.toJson(neighboursFav);
+        sharedPreferences.edit().putString(KEY_LIST_FAV_NEIGHBOUR,listFav).apply();
     }
 }

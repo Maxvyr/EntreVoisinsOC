@@ -53,7 +53,6 @@ public class ProfilActivity extends AppCompatActivity {
 
     //Over variables
     private static final String TAG = "ProfilActivity";
-    private static final String KEY_ISFAV = "isFavorite";
     public static final String KEY_NEIGHBOUR = "neighbour";
     public static final String KEY_POSITION = "neighbour";
 
