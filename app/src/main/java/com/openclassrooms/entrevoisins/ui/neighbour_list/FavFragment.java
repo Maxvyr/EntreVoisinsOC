@@ -69,24 +69,6 @@ public class FavFragment extends BaseFragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    private void showList(Neighbour neighbourFav) {
-        if(neighbourFav != null) {
-            if (neighbourFav.getFavorite() && !neighboursFav.contains(neighbourFav)) {
-               neighboursFav.add(neighbourFav);
-               Log.i(TAG, "showList: " + neighbourFav);
-            } else if (!neighbourFav.getFavorite()) {
-                neighboursFav.remove(neighbourFav);
-            }
-            adapter.notifyDataSetChanged();
-            stockListFavNeighbourSharedPref(neighboursFav);
-        }
-    }
-
     /**
      * Transform list NeighbourFav into a JSOn File
      * @param neighboursFav list of Neighbour add to list Fav
@@ -144,5 +126,18 @@ public class FavFragment extends BaseFragment {
         EventBus.getDefault().removeAllStickyEvents();
         String sharedPreferencesString = sharedPreferences.getString(KEY_LIST_FAV_NEIGHBOUR, "");
         Log.d(TAG, "onEventFav: sharedPref = " + sharedPreferencesString);
+    }
+
+    private void showList(Neighbour neighbourFav) {
+        if(neighbourFav != null) {
+            if (neighbourFav.getFavorite() && !neighboursFav.contains(neighbourFav)) {
+                neighboursFav.add(neighbourFav);
+                Log.i(TAG, "showList: " + neighbourFav);
+            } else if (!neighbourFav.getFavorite()) {
+                neighboursFav.remove(neighbourFav);
+            }
+            adapter.notifyDataSetChanged();
+            stockListFavNeighbourSharedPref(neighboursFav);
+        }
     }
 }
