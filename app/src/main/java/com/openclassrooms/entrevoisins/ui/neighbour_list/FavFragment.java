@@ -117,16 +117,12 @@ public class FavFragment extends BaseFragment {
 
     private void showList(Neighbour neighbourFav) {
         if(neighbourFav != null) {
-            if (neighbourFav.getFavorite() && !neighboursFav.contains(neighbourFav)) {
-                neighboursFav.add(neighbourFav);
+                apiService.getListFavNeighbours(neighbourFav,neighboursFav);
                 Log.i(TAG, "showList: " + neighbourFav);
-            } else if (!neighbourFav.getFavorite()) {
-                neighboursFav.remove(neighbourFav);
             }
             adapter.notifyDataSetChanged();
             stockListFavNeighbourSharedPref(neighboursFav);
         }
-    }
 
     /**
      * Transform list NeighbourFav into a JSOn File

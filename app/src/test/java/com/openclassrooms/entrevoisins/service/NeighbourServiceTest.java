@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
@@ -63,8 +64,9 @@ public class NeighbourServiceTest {
     @Test
     public void getFavoriteListNeighbourWithSucces() {
         Neighbour neighbour = service.getNeighbours().get(5);
+        List<Neighbour> neigbours = new ArrayList<Neighbour>();
         service.changeValueFav(neighbour);
-        List<Neighbour> neighbourListFav = service.getFavNeighbours();
+        List<Neighbour> neighbourListFav = service.getListFavNeighbours(neighbour, neigbours);
         assertTrue(neighbourListFav.contains(neighbour));
     }
 }

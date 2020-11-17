@@ -38,5 +38,5 @@ public interface NeighbourApiService {
      * Compare with getNeighbour
      * @return
      */
-    List<Neighbour> getFavNeighbours();
+    List<Neighbour> getListFavNeighbours(Neighbour neighbourFav, List<Neighbour> neighboursFav);
 }

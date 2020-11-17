@@ -54,14 +54,14 @@ public class ProfilActivity extends AppCompatActivity {
     public static final String KEY_NEIGHBOUR = "neighbour";
     public static final String KEY_POSITION = "neighbour";
 
-    private NeighbourApiService mApiService;
+    private NeighbourApiService apiService;
     Neighbour neighbour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
-        mApiService = DI.getNeighbourApiService();
+        apiService = DI.getNeighbourApiService();
 
         //Instancie lib Butter Knife
         ButterKnife.bind(this);
@@ -142,7 +142,7 @@ public class ProfilActivity extends AppCompatActivity {
     //Method when User click on the FAB button to add favoris
     void addToFav(){
         //methode to updateToFav
-        mApiService.changeValueFav(neighbour);
+        apiService.changeValueFav(neighbour);
         Log.d(TAG, "addToFav: " + neighbour.getId() +  " fav " + neighbour.getFavorite());
         // en fonction du click changer l'affichage
         showStarColor();

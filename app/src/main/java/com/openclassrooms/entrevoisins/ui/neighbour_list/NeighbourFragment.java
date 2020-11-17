@@ -1,20 +1,16 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.base.BaseFragment;
@@ -37,8 +33,6 @@ import java.util.List;
 
 
 public class NeighbourFragment extends BaseFragment {
-
-    private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private MyNeighbourRecyclerViewAdapter adapter = null;
     private static final String TAG = "NeighbourFragment";
@@ -54,8 +48,6 @@ public class NeighbourFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApiService = DI.getNeighbourApiService();
-        Log.i(TAG, "onCreate: ");
     }
 
     @Override
@@ -79,7 +71,7 @@ public class NeighbourFragment extends BaseFragment {
             Type listType = new TypeToken<ArrayList<Neighbour>>(){}.getType();
             mNeighbours = gson.fromJson(jsonListNewNeighbour,listType);
         } else {
-            mNeighbours = mApiService.getNeighbours();
+            mNeighbours = apiService.getNeighbours();
         }
         adapter = new MyNeighbourRecyclerViewAdapter(mNeighbours);
         Log.d(TAG, "recoverListNeigbour: value final " + mNeighbours);
