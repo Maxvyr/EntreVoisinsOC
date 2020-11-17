@@ -42,16 +42,12 @@ public class NeighbourServiceTest {
      */
     @Test
     public void addNeighbourWithSuccess() {
-        Neighbour neighbourToAdd = new Neighbour(42,"bob","","Saturne","00000000","carotte",false);
+        Neighbour neighbourToAdd = new Neighbour(42,"Bob","","Saturne","00000000","carotte",false);
         service.createNeighbour(neighbourToAdd);
         assertTrue(service.getNeighbours().contains(neighbourToAdd));
     }
-
-    /**
-     * Add Neighbour to favorite with success
-     */
     @Test
-    public void addToFavoriteNeighbourWithSucces() {
+    public void addToFavoriteNeighbourWithSuccess() {
         Neighbour neighbourToAddFav = service.getNeighbours().get(3);
         service.changeValueFav(neighbourToAddFav);
         Boolean isFavNeighbour = service.getNeighbours().get(3).getFavorite();
@@ -59,10 +55,22 @@ public class NeighbourServiceTest {
     }
 
     /**
+     * Remove Neighbour to favorite with success
+     */
+    @Test
+    public void removeToFavoriteNeighbourWithSuccess() {
+        Neighbour neighbourFavToRemove = new Neighbour(43,"Franck","","","","",true);
+        service.changeValueFav(neighbourFavToRemove);
+        Boolean isNotFavNeighbour = neighbourFavToRemove.getFavorite();
+        assertFalse(isNotFavNeighbour);
+    }
+
+
+    /**
      * Neigbour addToFav list is equal to Neigbour with fav check in list
      */
     @Test
-    public void getFavoriteListNeighbourWithSucces() {
+    public void getFavoriteListNeighbourWithSuccess() {
         Neighbour neighbour = service.getNeighbours().get(5);
         List<Neighbour> neigbours = new ArrayList<Neighbour>();
         service.changeValueFav(neighbour);
