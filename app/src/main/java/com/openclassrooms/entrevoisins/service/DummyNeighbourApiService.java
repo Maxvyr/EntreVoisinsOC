@@ -40,12 +40,9 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     }
 
     @Override
-    public void addFav(Neighbour neighbour) {
-        for (Neighbour neighbourList : neighbours) {
-            if (neighbour.getId() == neighbourList.getId()) {
-                neighbourList.setFavorite(true);
-            }
-        }
+    public void changeValueFav(Neighbour neighbour) {
+        //inverser la valeur lors du click
+        neighbour.setFavorite(!neighbour.getFavorite());
     }
 
     @Override

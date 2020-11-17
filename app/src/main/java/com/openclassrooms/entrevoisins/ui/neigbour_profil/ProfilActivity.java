@@ -2,16 +2,13 @@ package com.openclassrooms.entrevoisins.ui.neigbour_profil;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -20,9 +17,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.SelectedNeighbourFavEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -56,12 +54,16 @@ public class ProfilActivity extends AppCompatActivity {
     public static final String KEY_NEIGHBOUR = "neighbour";
     public static final String KEY_POSITION = "neighbour";
 
+    private NeighbourApiService mApiService;
     Neighbour neighbour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
+        mApiService = DI.getNeighbourApiService();
+
+        //Instancie lib Butter Knife
         ButterKnife.bind(this);
 
         //retrieve Neighbour
@@ -134,22 +136,22 @@ public class ProfilActivity extends AppCompatActivity {
                 .apply(RequestOptions.noTransformation())
                 .into(this.imageViewProfil);
         //FAB color
-        showStartColor();
+        showStarColor();
     }
 
     //Method when User click on the FAB button to add favoris
     void addToFav(){
-        //inverser la valeur lors du click
-        neighbour.setFavorite(!neighbour.getFavorite());
+        //methode to updateToFav
+        mApiService.changeValueFav(neighbour);
         Log.d(TAG, "addToFav: " + neighbour.getId() +  " fav " + neighbour.getFavorite());
         // en fonction du click changer l'affichage
-        showStartColor();
+        showStarColor();
         // repasse valeur dans l'activité précédente
         EventBus.getDefault().postSticky(new SelectedNeighbourFavEvent(neighbour));
         finish();
     }
 
-    void showStartColor() {
+    void showStarColor() {
         Log.d(TAG, "showStartColor: " + neighbour.getFavorite());
         if (neighbour.getFavorite()) {
             floatingActionButtonProfil.setImageResource(R.drawable.ic_star_yellow_24dp);
