@@ -84,7 +84,7 @@ public class NeighbourFragment extends BaseFragment {
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         Log.i(TAG, "onDeleteNeighbour: " + mNeighbours.size());
         apiService.deleteNeighbour(event.neighbour);
-        mNeighbours.remove(event.neighbour);
+        mNeighbours = apiService.getNeighbours();
         Log.i(TAG,
                 "onDeleteNeighbour:  size list = " + mNeighbours.size() + " neighbour delete = " + event.neighbour.getName());
         stockListNeighbourSharedPrefUpadte(mNeighbours);
@@ -103,6 +103,7 @@ public class NeighbourFragment extends BaseFragment {
     @Subscribe(sticky = true)
     public void onAddNeighbour(AddNeighbourEvent event) {
         Log.i(TAG, "onAddNeighbour: " + mNeighbours.size());
+//        mNeighbours.add(event.getNeighbour());
         apiService.createNeighbour(event.getNeighbour());
         mNeighbours = apiService.getNeighbours();
         Log.i(TAG,
