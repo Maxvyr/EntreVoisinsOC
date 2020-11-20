@@ -83,8 +83,7 @@ public class NeighbourFragment extends BaseFragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         Log.i(TAG, "onDeleteNeighbour: " + mNeighbours.size());
-        apiService.deleteNeighbour(event.neighbour);
-        mNeighbours = apiService.getNeighbours();
+        apiService.deleteNeighbour(event.neighbour, mNeighbours);
         Log.i(TAG,
                 "onDeleteNeighbour:  size list = " + mNeighbours.size() + " neighbour delete = " + event.neighbour.getName());
         stockListNeighbourSharedPrefUpadte(mNeighbours);
@@ -103,9 +102,7 @@ public class NeighbourFragment extends BaseFragment {
     @Subscribe(sticky = true)
     public void onAddNeighbour(AddNeighbourEvent event) {
         Log.i(TAG, "onAddNeighbour: " + mNeighbours.size());
-//        mNeighbours.add(event.getNeighbour());
-        apiService.createNeighbour(event.getNeighbour());
-        mNeighbours = apiService.getNeighbours();
+        mNeighbours.add(event.getNeighbour());
         Log.i(TAG,
                 "onAddNeighbour:  size list = " + mNeighbours.size() + " neighbour delete = " + event.getNeighbour().getName());
         // for removing all data send with Event Bus after receive

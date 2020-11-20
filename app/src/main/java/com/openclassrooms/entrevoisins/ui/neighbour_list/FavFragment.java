@@ -97,7 +97,7 @@ public class FavFragment extends BaseFragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         //delete user
-        neighboursFav.remove(event.neighbour);
+        apiService.deleteNeighbour(event.neighbour, neighboursFav);
         Log.i(TAG, "onDeleteNeighbour: " + event.neighbour.getName());
         //save new List
         stockListFavNeighbourSharedPref(neighboursFav);

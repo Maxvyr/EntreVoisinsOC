@@ -20,13 +20,7 @@ public interface NeighbourApiService {
      * Deletes a neighbour
      * @param neighbour
      */
-    void deleteNeighbour(Neighbour neighbour);
-
-    /**
-     * Create a neighbour
-     * @param neighbour
-     */
-    void createNeighbour(Neighbour neighbour);
+    void deleteNeighbour(Neighbour neighbour, List<Neighbour> neighboursList);
 
     /**
      * Check neighbour fav

@@ -33,18 +33,9 @@ public class NeighbourServiceTest {
     @Test
     public void deleteNeighbourWithSuccess() {
         Neighbour neighbourToDelete = service.getNeighbours().get(0);
-        service.deleteNeighbour(neighbourToDelete);
-        assertFalse(service.getNeighbours().contains(neighbourToDelete));
-    }
-
-    /**
-     * Add Neighbour with success
-     */
-    @Test
-    public void addNeighbourWithSuccess() {
-        Neighbour neighbourToAdd = new Neighbour(42,"Bob","","Saturne","00000000","carotte",false);
-        service.createNeighbour(neighbourToAdd);
-        assertTrue(service.getNeighbours().contains(neighbourToAdd));
+        List<Neighbour> neighbourList = service.getNeighbours();
+        service.deleteNeighbour(neighbourToDelete,neighbourList);
+        assertFalse(neighbourList.contains(neighbourToDelete));
     }
 
     @Test
