@@ -83,6 +83,7 @@ public class NeighbourFragment extends BaseFragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         Log.i(TAG, "onDeleteNeighbour: " + mNeighbours.size());
+        apiService.deleteNeighbour(event.neighbour);
         mNeighbours.remove(event.neighbour);
         Log.i(TAG,
                 "onDeleteNeighbour:  size list = " + mNeighbours.size() + " neighbour delete = " + event.neighbour.getName());
