@@ -140,7 +140,7 @@ public class ProfilActivity extends AppCompatActivity {
     }
 
     //Method when User click on the FAB button to add favoris
-    void addToFav(){
+    private void addToFav(){
         //methode to updateToFav
         apiService.changeValueFav(neighbour);
         Log.d(TAG, "addToFav: " + neighbour.getId() +  " fav " + neighbour.getFavorite());
@@ -151,7 +151,7 @@ public class ProfilActivity extends AppCompatActivity {
         finish();
     }
 
-    void showStarColor() {
+    private void showStarColor() {
         Log.d(TAG, "showStartColor: " + neighbour.getFavorite());
         if (neighbour.getFavorite()) {
             floatingActionButtonProfil.setImageResource(R.drawable.ic_star_yellow_24dp);
